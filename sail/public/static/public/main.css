@@ -8,6 +8,10 @@ h1, h2, h3, h4, h5, h6 {
     color: #444444;
 }
 
+.about-body {
+    background: white;
+}
+
 .bg-sail-color {
     background-color: #324f9a;
 }
@@ -22,4 +26,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .site-header .navbar-nav .nav-link.active {
     font-weight: 500;
+}
+
+.center {
+    display: block;
+    margin: 0 auto;
+    width: 50%;
 }

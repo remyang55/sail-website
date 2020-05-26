@@ -1,4 +1,19 @@
 {% extends "public/base.html" %}
+{% load static %}
+{% block css %}
+    <style>
+        body {
+            background-color: #afbee5;
+        }
+    </style>
+{% endblock css %}
+
 {% block content %}
-    <h1>Home page</h1>
+    <img src="{% static 'public/sail_logo.png' %}" alt="Sail Logo" style="width:40%" class="center">
+    <p style="color:white" class="center">
+        Welcome to Illinois Computer Science Sail!
+        We are an entirely student-run organization that hosts an annual one-day event where
+        high schoolers have the chance to experience what it is like to be a computer science student
+        at the University of Illinois at Urbana-Champaign.
+    </p>
 {% endblock content %}
