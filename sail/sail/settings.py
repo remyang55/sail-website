@@ -127,3 +127,5 @@ STATIC_URL = '/static/'
 # Custom settings
 
 AUTH_USER_MODEL = 'users.SailUser'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
