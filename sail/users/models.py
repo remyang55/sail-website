@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import ugettext_lazy as _
 
@@ -45,3 +46,36 @@ class SailUser(AbstractUser):
     REQUIRED_FIELDS = []
 
     objects = SailUserManager()
+
+    def __str__(self):
+        return f'{self.email} User'
+
+class SailParticipant(models.Model):
+    user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
+
+    TEACHER = 'T'
+    STUDENT = 'S'
+    ROLE_CHOICES = (
+        (TEACHER, 'Teacher'),
+        (STUDENT, 'Student'),
+    )
+    role = models.CharField(max_length=1,
+                            choices=ROLE_CHOICES,
+                            default=STUDENT)
+
+    FRESHMAN = 'FR'
+    SOPHOMORE = 'SO'
+    JUNIOR = 'JR'
+    SENIOR = 'SR'
+    YEAR_IN_SCHOOL_CHOICES = (
+        (FRESHMAN, 'Freshman'),
+        (SOPHOMORE, 'Sophomore'),
+        (JUNIOR, 'Junior'),
+        (SENIOR, 'Senior'),
+    )
+    year_in_school = models.CharField(max_length=2,
+                                      choices=YEAR_IN_SCHOOL_CHOICES,
+                                      default=FRESHMAN)
+    
+    def __str__(self):
+        return f'{self.user.email} {self.role} {self.year_in_school} Participant'

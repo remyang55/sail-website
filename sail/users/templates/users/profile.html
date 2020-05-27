@@ -1,5 +1,13 @@
 {% extends "public/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <h1> {{user.first_name}} {{user.last_name}} </h1>
+    <div class="content-section w-75">
+        <div class="media">
+            <div class="media-body">
+                <h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h2>
+                <p class="text-secondary">{{ user.email }}</p>
+            </div>
+        </div>
+        <!-- FORM HERE -->
+    </div>
 {% endblock content %}
