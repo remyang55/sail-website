@@ -8,7 +8,7 @@ def register(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Account created! You may login now.')
-            return redirect('sail-home')
+            return redirect('users-login')
     else:
         form = SailUserCreationForm()
     return render(request, 'users/register.html', {'form':form})

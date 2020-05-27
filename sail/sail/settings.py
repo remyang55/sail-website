@@ -129,3 +129,5 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'users.SailUser'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOGIN_REDIRECT_URL = 'sail-home'
