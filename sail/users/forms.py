@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import SailUser, SailTeacher, SailStudent
+from .models import SailUser, Teacher, Student
 
 class SailUserCreationForm(UserCreationForm):
     first_name = forms.CharField()
@@ -10,17 +10,17 @@ class SailUserCreationForm(UserCreationForm):
         model = SailUser
         fields = ['email', 'first_name', 'last_name', 'password1', 'password2']
 
-class SailTeacherCreationForm(forms.ModelForm):
+class TeacherCreationForm(forms.ModelForm):
 
     class Meta:
-        model = SailTeacher
+        model = Teacher
         fields = ['major', 'year_in_school']
         exclude = ('user',)
 
-class SailStudentCreationForm(forms.ModelForm):
+class StudentCreationForm(forms.ModelForm):
 
     class Meta:
-        model = SailStudent
+        model = Student
         fields = ['gender_identification', 'dietary_restrictions', 'shirt_size', 
                   'home_city', 'home_state', 'home_zip_code', 'high_school', 'year_in_school', 
                   'phone_number', 'parent_name', 'parent_phone_number',

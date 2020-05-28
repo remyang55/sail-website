@@ -51,7 +51,7 @@ class SailUser(AbstractUser):
     def __str__(self):
         return f'{self.email} User'
 
-class SailTeacher(models.Model):
+class Teacher(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
 
     major = models.CharField(max_length=50)
@@ -73,7 +73,7 @@ class SailTeacher(models.Model):
     def __str__(self):
         return f'{self.user.email} Teacher -- {self.major}'
 
-class SailStudent(models.Model):
+class Student(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
 
     #REQUIRED FIELDS

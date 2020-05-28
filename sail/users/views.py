@@ -12,10 +12,10 @@ from django.core.mail import EmailMessage
 from .token_generator import account_activation_token
 """EMAIL IMPORTS"""
 
-from .models import SailTeacher, SailStudent
+from .models import Teacher, Student
 from .forms import (SailUserCreationForm, 
-                    SailTeacherCreationForm,
-                    SailStudentCreationForm,
+                    TeacherCreationForm,
+                    StudentCreationForm,
                     SailUserUpdateForm
 )
 
@@ -55,7 +55,7 @@ def activate_account(request, uidb64, token):
 def register_teacher(request):
     if request.method == 'POST':
         u_form = SailUserCreationForm(request.POST)
-        p_form = SailTeacherCreationForm(request.POST)
+        p_form = TeacherCreationForm(request.POST)
         if u_form.is_valid() and p_form.is_valid():
             user = u_form.save(commit=False)
             user.is_active = False
@@ -71,7 +71,7 @@ def register_teacher(request):
             return redirect('users_login')
     else:
         u_form = SailUserCreationForm()
-        p_form = SailTeacherCreationForm()
+        p_form = TeacherCreationForm()
     
     context = {'u_form':u_form, 'p_form':p_form}
 
@@ -80,7 +80,7 @@ def register_teacher(request):
 def register_student(request):
     if request.method == 'POST':
         u_form = SailUserCreationForm(request.POST)
-        p_form = SailStudentCreationForm(request.POST)
+        p_form = StudentCreationForm(request.POST)
         if u_form.is_valid() and p_form.is_valid():
             user = u_form.save(commit=False)
             user.is_active = False
@@ -96,7 +96,7 @@ def register_student(request):
             return redirect('users_login')
     else:
         u_form = SailUserCreationForm()
-        p_form = SailStudentCreationForm()
+        p_form = StudentCreationForm()
     
     context = {'u_form':u_form, 'p_form':p_form}
 
