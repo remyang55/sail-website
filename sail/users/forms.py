@@ -11,10 +11,6 @@ class SailUserCreationForm(UserCreationForm):
         fields = ['email', 'first_name', 'last_name', 'password1', 'password2']
 
 class SailTeacherCreationForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(SailTeacherCreationForm, self).__init__(*args, **kwargs)  
-        self.fields['major'] = forms.CharField(max_length=SailTeacher.MAJOR_MAX_LENGTH)
-        self.fields['year_in_school'] = forms.ChoiceField(choices=SailTeacher.YEAR_IN_SCHOOL_CHOICES)
 
     class Meta:
         model = SailTeacher
@@ -22,14 +18,17 @@ class SailTeacherCreationForm(forms.ModelForm):
         exclude = ('user',)
 
 class SailStudentCreationForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(SailStudentCreationForm, self).__init__(*args, **kwargs)  
-        self.fields['admitted_student'] = forms.BooleanField(required=False)
-        self.fields['year_in_school'] = forms.ChoiceField(choices=SailStudent.YEAR_IN_SCHOOL_CHOICES)
 
     class Meta:
         model = SailStudent
-        fields = ['year_in_school', 'admitted_student']
+        fields = ['gender_identification', 'dietary_restrictions', 'shirt_size', 
+                  'home_city', 'home_state', 'home_zip_code', 'high_school', 'year_in_school', 
+                  'phone_number', 'parent_name', 'parent_phone_number',
+                  'parent_email', 'admitted_student']
+        help_texts = {
+            'dietary_restrictions': "Describe any dietary restrictions you have. Leave blank if you don't have any.",
+            'home_state': "Enter the two-letter abbreviation for your state, in all caps. Leave blank if not in the U.S."
+        }
         exclude = ('user',)
 
 class SailUserUpdateForm(forms.ModelForm):

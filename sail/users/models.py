@@ -54,8 +54,7 @@ class SailUser(AbstractUser):
 class SailTeacher(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
 
-    MAJOR_MAX_LENGTH = 50
-    major = models.CharField(max_length=MAJOR_MAX_LENGTH)
+    major = models.CharField(max_length=50)
 
     FRESHMAN = 'Freshman'
     SOPHOMORE = 'Sophomore'
@@ -76,7 +75,35 @@ class SailTeacher(models.Model):
 
 class SailStudent(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
-    admitted_student = models.BooleanField()
+
+    #REQUIRED FIELDS
+    MALE = 'Male'
+    FEMALE = 'Female'
+    NON_BIN = 'Non_Binary'
+    GENDER_ID_CHOICES = (
+        (MALE, 'Male'),
+        (FEMALE, 'Female'),
+        (NON_BIN, 'Non-binary')
+    )
+    gender_identification = models.CharField(max_length=10, choices=GENDER_ID_CHOICES)
+
+    XS = 'XS'
+    S = 'S'
+    M = 'M'
+    L = 'L'
+    XL = 'XL'
+    SHIRT_SIZE_CHOICES = (
+        (XS, 'Unisex XS'),
+        (S, 'Unisex S'),
+        (M, 'Unisex M'),
+        (L, 'Unisex L'),
+        (XL, 'Unisex XL')
+    )
+    shirt_size = models.CharField(max_length=5, choices=SHIRT_SIZE_CHOICES)
+
+    home_city = models.CharField(max_length=50)
+    home_zip_code = models.PositiveIntegerField()
+    high_school = models.CharField(max_length=50)
 
     FRESHMAN = 'Freshman'
     SOPHOMORE = 'Sophomore'
@@ -91,6 +118,16 @@ class SailStudent(models.Model):
     year_in_school = models.CharField(max_length=10,
                                       choices=YEAR_IN_SCHOOL_CHOICES,
                                       default=FRESHMAN)
+    
+    phone_number = models.PositiveIntegerField()
+    parent_name = models.CharField(max_length=100)
+    parent_phone_number = models.PositiveIntegerField()
+    parent_email = models.EmailField()
+
+    #OPTIONAL FIELDS (specified with blank=True)
+    dietary_restrictions = models.CharField(max_length=50, blank=True)
+    home_state = models.CharField(max_length=2, blank=True)
+    admitted_student = models.BooleanField(blank=True)
     
     def __str__(self):
         return f'{self.user.email} Student'
