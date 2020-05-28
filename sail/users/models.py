@@ -53,27 +53,27 @@ class SailUser(AbstractUser):
 class SailParticipant(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
 
-    TEACHER = 'T'
-    STUDENT = 'S'
+    TEACHER = 'Teacher'
+    STUDENT = 'Student'
     ROLE_CHOICES = (
         (TEACHER, 'Teacher'),
         (STUDENT, 'Student'),
     )
-    role = models.CharField(max_length=1,
+    role = models.CharField(max_length=10,
                             choices=ROLE_CHOICES,
                             default=STUDENT)
 
-    FRESHMAN = 'FR'
-    SOPHOMORE = 'SO'
-    JUNIOR = 'JR'
-    SENIOR = 'SR'
+    FRESHMAN = 'Freshman'
+    SOPHOMORE = 'Sophomore'
+    JUNIOR = 'Junior'
+    SENIOR = 'Senior'
     YEAR_IN_SCHOOL_CHOICES = (
         (FRESHMAN, 'Freshman'),
         (SOPHOMORE, 'Sophomore'),
         (JUNIOR, 'Junior'),
         (SENIOR, 'Senior'),
     )
-    year_in_school = models.CharField(max_length=2,
+    year_in_school = models.CharField(max_length=10,
                                       choices=YEAR_IN_SCHOOL_CHOICES,
                                       default=FRESHMAN)
     
