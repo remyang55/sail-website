@@ -8,7 +8,7 @@ class Course(models.Model):
     description = models.TextField()
     prior_knowledge = models.CharField(max_length=100, blank=True)
     course_length = models.PositiveSmallIntegerField(default=60)
-    capacity_limit = models.PositiveSmallIntegerField(blank=True)
+    capacity_limit = models.PositiveSmallIntegerField(blank=True, null=True)
     approved = models.BooleanField(default=False)
     last_modified = models.DateTimeField(auto_now=True)
     time_created = models.DateTimeField(auto_now_add=True)

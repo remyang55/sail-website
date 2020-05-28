@@ -1,0 +1,15 @@
+{% extends "public/base.html" %}
+{% block content %}
+    {% for course in courses %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ course.teacher }}</a>
+              <small class="text-muted">Created on {{ course.time_created|date:"F d, Y" }}</small>
+            </div>
+            <h2><a class="article-title">{{ course.course_name }}</a></h2>
+            <p class="article-content">{{ course.short_description }}</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

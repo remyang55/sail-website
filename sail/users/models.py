@@ -71,7 +71,7 @@ class Teacher(models.Model):
                                       default=FRESHMAN)
     
     def __str__(self):
-        return f'{self.user.email} Teacher -- {self.major}'
+        return f'{self.user.first_name} {self.user.last_name}'
 
 class Student(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
@@ -134,4 +134,4 @@ class Student(models.Model):
     admitted_student = models.BooleanField(blank=True)
     
     def __str__(self):
-        return f'{self.user.email} Student'
+        return f'{self.user.first_name} {self.user.last_name}'
