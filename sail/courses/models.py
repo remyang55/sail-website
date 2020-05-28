@@ -2,7 +2,7 @@ from django.db import models
 from users.models import Teacher
 
 class Course(models.Model):
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    teachers = models.ManyToManyField(Teacher)
     course_name = models.CharField(max_length=100)
     short_description = models.CharField(max_length=255)
     description = models.TextField()
