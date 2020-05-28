@@ -9,6 +9,18 @@
                 <p>{{ user.sailparticipant.role }}</p>
             </div>
         </div>
-        <!-- FORM HERE -->
+        
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Update Account</legend>
+                <div class="w-50">
+                    {{ form|crispy }}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Update</button>
+            </div>
+        </form>
     </div>
 {% endblock content %}

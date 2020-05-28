@@ -14,3 +14,11 @@ class SailUserCreationForm(UserCreationForm):
     class Meta:
         model = SailUser
         fields = ['email', 'first_name', 'last_name', 'password1', 'password2']
+
+class SailUserUpdateForm(forms.ModelForm):
+    first_name = forms.CharField()
+    last_name = forms.CharField()
+
+    class Meta:
+        model = SailUser
+        fields = ['email', 'first_name', 'last_name']
