@@ -85,7 +85,9 @@ class SailStudent(models.Model):
         (FEMALE, 'Female'),
         (NON_BIN, 'Non-binary')
     )
-    gender_identification = models.CharField(max_length=10, choices=GENDER_ID_CHOICES)
+    gender_identification = models.CharField(max_length=10, 
+                                             choices=GENDER_ID_CHOICES, 
+                                             default=MALE)
 
     XS = 'XS'
     S = 'S'
@@ -99,7 +101,9 @@ class SailStudent(models.Model):
         (L, 'Unisex L'),
         (XL, 'Unisex XL')
     )
-    shirt_size = models.CharField(max_length=5, choices=SHIRT_SIZE_CHOICES)
+    shirt_size = models.CharField(max_length=5, 
+                                  choices=SHIRT_SIZE_CHOICES,
+                                  default=XS)
 
     home_city = models.CharField(max_length=50)
     home_zip_code = models.PositiveIntegerField()

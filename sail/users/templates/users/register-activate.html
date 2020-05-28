@@ -1,0 +1,9 @@
+{% autoescape off %}
+Dear {{ user.first_name }},
+Thank you for creating a Sail account! Please click on the link below to activate your account:
+
+http://{{ domain }}{% url 'users-activate' uidb64=uid token=token %}
+
+Sincerely,
+The Sail Staff
+{% endautoescape %}
