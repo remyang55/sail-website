@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.utils.translation import ugettext_lazy as _
-from .models import SailUser, SailParticipant
+from .models import SailUser, SailTeacher, SailStudent
 
 # Credits to https://www.fomfus.com/articles/how-to-use-email-as-username-for-django-authentication-removing-the-username
 
@@ -26,4 +26,5 @@ class SailUserAdmin(DjangoUserAdmin):
     search_fields = ('email', 'first_name', 'last_name')
     ordering = ('email',)
 
-admin.site.register(SailParticipant)
+admin.site.register(SailTeacher)
+admin.site.register(SailStudent)

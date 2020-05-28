@@ -3,7 +3,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import ugettext_lazy as _
 
-# Credits to https://www.fomfus.com/articles/how-to-use-email-as-username-for-django-authentication-removing-the-username
+# Credits for UserManager and User 
+# to https://www.fomfus.com/articles/how-to-use-email-as-username-for-django-authentication-removing-the-username
 
 class SailUserManager(BaseUserManager):
     """Define a model manager for User model with no username field."""
@@ -50,18 +51,9 @@ class SailUser(AbstractUser):
     def __str__(self):
         return f'{self.email} User'
 
-class SailParticipant(models.Model):
+class SailTeacher(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
-
-    TEACHER = 'Teacher'
-    STUDENT = 'Student'
-    ROLE_CHOICES = (
-        (TEACHER, 'Teacher'),
-        (STUDENT, 'Student'),
-    )
-    role = models.CharField(max_length=10,
-                            choices=ROLE_CHOICES,
-                            default=STUDENT)
+    major = models.CharField(max_length=50)
 
     FRESHMAN = 'Freshman'
     SOPHOMORE = 'Sophomore'
@@ -78,4 +70,22 @@ class SailParticipant(models.Model):
                                       default=FRESHMAN)
     
     def __str__(self):
-        return f'{self.user.email} {self.role} {self.year_in_school} Participant'
+        return f'{self.user.email} Teacher -- {self.major}'
+
+class SailStudent(models.Model):
+    user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
+    is_admitted = models.BooleanField()
+
+    FRESHMAN = 'Freshman'
+    SOPHOMORE = 'Sophomore'
+    JUNIOR = 'Junior'
+    SENIOR = 'Senior'
+    YEAR_IN_SCHOOL_CHOICES = (
+        (FRESHMAN, 'Freshman'),
+        (SOPHOMORE, 'Sophomore'),
+        (JUNIOR, 'Junior'),
+        (SENIOR, 'Senior'),
+    )
+    year_in_school = models.CharField(max_length=10,
+                                      choices=YEAR_IN_SCHOOL_CHOICES,
+                                      default=FRESHMAN)
