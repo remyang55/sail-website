@@ -27,7 +27,7 @@ def _send_register_confirmation_email(request, user, to_email):
     email_subject = 'Activate your Sail Account'
     current_site = get_current_site(request)
 
-    message = render_to_string('users/register-activate.html', {
+    message = render_to_string('users/register_activate.html', {
         'user': user,
         'domain': current_site.domain,
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
@@ -47,10 +47,10 @@ def activate_account(request, uidb64, token):
         user.is_active = True
         user.save()
         messages.success(request, 'Your account has been activated successfully. You may login now!')
-        return redirect('users-login')
+        return redirect('users_login')
     else:
         messages.error(request, 'The activation link seems to be invalid!')
-        return redirect('sail-home')
+        return redirect('sail_home')
 
 def register_teacher(request):
     if request.method == 'POST':
@@ -68,14 +68,14 @@ def register_teacher(request):
             _send_register_confirmation_email(request, user, u_form.cleaned_data['email'])
 
             messages.success(request, 'Account created! You will need to verify your account in your email before you can login.')
-            return redirect('users-login')
+            return redirect('users_login')
     else:
         u_form = SailUserCreationForm()
         p_form = SailTeacherCreationForm()
     
     context = {'u_form':u_form, 'p_form':p_form}
 
-    return render(request, 'users/register-form.html', context)
+    return render(request, 'users/register_form.html', context)
 
 def register_student(request):
     if request.method == 'POST':
@@ -93,14 +93,14 @@ def register_student(request):
             _send_register_confirmation_email(request, user, u_form.cleaned_data['email'])
 
             messages.success(request, 'Account created! You will need to verify your account in your email before you can login.')
-            return redirect('users-login')
+            return redirect('users_login')
     else:
         u_form = SailUserCreationForm()
         p_form = SailStudentCreationForm()
     
     context = {'u_form':u_form, 'p_form':p_form}
 
-    return render(request, 'users/register-form.html', context)
+    return render(request, 'users/register_form.html', context)
 
 @login_required
 def profile(request):
@@ -110,11 +110,11 @@ def profile(request):
             if form.is_valid():
                 user = form.save()
                 messages.success(request, 'Account updated!')
-                return redirect('users-profile')
+                return redirect('users_profile')
         elif request.POST['action'] == 'Delete':
             request.user.delete()
             messages.success(request, 'Account deleted')
-            return redirect('sail-home')
+            return redirect('sail_home')
     else:
         form = SailUserUpdateForm(instance=request.user)
     return render(request, 'users/profile.html', {'form':form})
