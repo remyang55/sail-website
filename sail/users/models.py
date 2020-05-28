@@ -53,7 +53,9 @@ class SailUser(AbstractUser):
 
 class SailTeacher(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
-    major = models.CharField(max_length=50)
+
+    MAJOR_MAX_LENGTH = 50
+    major = models.CharField(max_length=MAJOR_MAX_LENGTH)
 
     FRESHMAN = 'Freshman'
     SOPHOMORE = 'Sophomore'
@@ -74,7 +76,7 @@ class SailTeacher(models.Model):
 
 class SailStudent(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
-    is_admitted = models.BooleanField()
+    admitted_student = models.BooleanField()
 
     FRESHMAN = 'Freshman'
     SOPHOMORE = 'Sophomore'
@@ -89,3 +91,6 @@ class SailStudent(models.Model):
     year_in_school = models.CharField(max_length=10,
                                       choices=YEAR_IN_SCHOOL_CHOICES,
                                       default=FRESHMAN)
+    
+    def __str__(self):
+        return f'{self.user.email} Student'

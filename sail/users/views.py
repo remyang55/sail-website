@@ -1,22 +1,64 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-# from .models import SailParticipant
-from .forms import SailUserCreationForm, SailUserUpdateForm
+from .models import SailTeacher, SailStudent
+from .forms import (SailUserCreationForm, 
+                    SailTeacherCreationForm,
+                    SailStudentCreationForm,
+                    SailUserUpdateForm
+)
 
 def register(request):
+    return render(request, 'users/register.html')
+
+def register_student(request):
     if request.method == 'POST':
         form = SailUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            # participant = SailParticipant.objects.create(user=user,
-            #                                              role=form.cleaned_data['role'],
-            #                                              year_in_school=form.cleaned_data['year_in_school'])
             messages.success(request, 'Account created! You may login now.')
             return redirect('users-login')
     else:
         form = SailUserCreationForm()
-    return render(request, 'users/register.html', {'form':form})
+    return render(request, 'users/register-form.html', {'form':form})
+
+def register_teacher(request):
+    if request.method == 'POST':
+        u_form = SailUserCreationForm(request.POST)
+        p_form = SailTeacherCreationForm(request.POST)
+        if u_form.is_valid() and p_form.is_valid():
+            user = u_form.save()
+            teacher = p_form.save(commit=False)
+            teacher.user = user
+            teacher.save()
+            messages.success(request, 'Account created! You may login now.')
+            return redirect('users-login')
+    else:
+        u_form = SailUserCreationForm()
+        p_form = SailTeacherCreationForm()
+    
+    context = {'u_form':u_form, 'p_form':p_form}
+
+    return render(request, 'users/register-form.html', context)
+
+def register_student(request):
+    if request.method == 'POST':
+        u_form = SailUserCreationForm(request.POST)
+        p_form = SailStudentCreationForm(request.POST)
+        if u_form.is_valid() and p_form.is_valid():
+            user = u_form.save()
+            student = p_form.save(commit=False)
+            student.user = user
+            student.save()
+            messages.success(request, 'Account created! You may login now.')
+            return redirect('users-login')
+    else:
+        u_form = SailUserCreationForm()
+        p_form = SailStudentCreationForm()
+    
+    context = {'u_form':u_form, 'p_form':p_form}
+
+    return render(request, 'users/register-form.html', context)
 
 @login_required
 def profile(request):

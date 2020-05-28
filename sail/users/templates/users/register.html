@@ -2,22 +2,9 @@
 {% load crispy_forms_tags %}
 {% block content %}
     <div class="content-section">
-        <form method="POST">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Make an Account</legend>
-                <div class="w-50">
-                    {{ form|crispy }}
-                </div>
-            </fieldset>
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Sign Up</button>
-            </div>
-        </form>
-        <div class="border-top pb-3">
-            <small class="text-muted">
-                Already have an account? <a class="ml-2" href="{% url 'users-login' %}">Sign In</a>
-            </small>
-        </div>
+        <legend class="border-bottom mb-3">Make an Account</legend>
+        <p>Please select the type of account you would like to make:</p>
+        <a class="btn btn-outline-primary" href="{% url 'users-register-teacher' %}">Teacher</a>
+        <a class="btn btn-outline-primary" href="{% url 'users-register-student' %}">Student</a>
     </div>
 {% endblock content %}
