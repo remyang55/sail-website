@@ -11,17 +11,6 @@ from .forms import (SailUserCreationForm,
 def register(request):
     return render(request, 'users/register.html')
 
-def register_student(request):
-    if request.method == 'POST':
-        form = SailUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            messages.success(request, 'Account created! You may login now.')
-            return redirect('users-login')
-    else:
-        form = SailUserCreationForm()
-    return render(request, 'users/register-form.html', {'form':form})
-
 def register_teacher(request):
     if request.method == 'POST':
         u_form = SailUserCreationForm(request.POST)
@@ -63,11 +52,16 @@ def register_student(request):
 @login_required
 def profile(request):
     if request.method == 'POST':
-        form = SailUserUpdateForm(request.POST, instance=request.user)
-        if form.is_valid():
-            user = form.save()
-            messages.success(request, 'Account updated!')
-            return redirect('users-profile')
+        if request.POST['action'] == 'Update':
+            form = SailUserUpdateForm(request.POST, instance=request.user)
+            if form.is_valid():
+                user = form.save()
+                messages.success(request, 'Account updated!')
+                return redirect('users-profile')
+        elif request.POST['action'] == 'Delete':
+            request.user.delete()
+            messages.success(request, 'Account deleted')
+            return redirect('sail-home')
     else:
         form = SailUserUpdateForm(instance=request.user)
     return render(request, 'users/profile.html', {'form':form})
