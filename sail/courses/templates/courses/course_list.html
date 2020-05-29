@@ -1,16 +1,26 @@
 {% extends "public/base.html" %}
 {% block content %}
-    {% for course in courses %}
-        <article class="media content-section">
-            <div class="media-body">
-            <div class="article-metadata">
-                <span class="mr-2">By</span>
-                <a class="mr-2" href="#">{{ course.teacher }}</a>
-                <small class="text-muted">Created on {{ course.time_created|date:"F d, Y" }}</small>
+    <div class="row">
+        <div class="col-8">
+            {% for course in courses %}
+                <article class="media content-section">
+                    <div class="media-body">
+                        <div class="article-metadata">
+                            <span class="mr-2">By</span>
+                            <a class="mr-2" href="#">{{ course.teacher }}</a>
+                            <!-- <small class="text-muted">Created on {{ course.time_created|date:"F d, Y" }}</small> -->
+                            <small class="text-muted">Course length: {{ course.course_length }} minutes</small>
+                        </div>
+                        <h2><a class="article-title" href="{% url 'courses_detail' course.id %}">{{ course.course_name }}</a></h2>
+                        <p class="article-content">{{ course.short_description }}</p>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+        <div class="col">
+            <div class="content-section">
+              <h3>Filter</h3>
             </div>
-            <h2><a class="article-title" href="{% url 'courses_detail' course.id %}">{{ course.course_name }}</a></h2>
-            <p class="article-content">{{ course.short_description }}</p>
-            </div>
-        </article>
-    {% endfor %}
+          </div>
+    </div>
 {% endblock content %}
