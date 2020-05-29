@@ -3,7 +3,7 @@ from django.urls import reverse
 from users.models import Teacher
 
 class Course(models.Model):
-    teachers = models.ManyToManyField(Teacher)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     course_name = models.CharField(max_length=100)
     short_description = models.CharField(max_length=255)
     description = models.TextField()

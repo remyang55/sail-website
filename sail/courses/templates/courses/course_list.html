@@ -5,9 +5,7 @@
             <div class="media-body">
             <div class="article-metadata">
                 <span class="mr-2">By</span>
-                {% for teacher in course.teachers.all %}
-                    <a class="mr-2" href="#">{{ teacher }}</a>
-                {% endfor %}
+                <a class="mr-2" href="#">{{ course.teacher }}</a>
                 <small class="text-muted">Created on {{ course.time_created|date:"F d, Y" }}</small>
             </div>
             <h2><a class="article-title" href="{% url 'courses_detail' course.id %}">{{ course.course_name }}</a></h2>
