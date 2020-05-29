@@ -46,6 +46,16 @@ class SailUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
+    TEACHER = 'Teacher'
+    STUDENT = 'Student'
+    ROLE_CHOICES = (
+        (TEACHER, 'Teacher'),
+        (STUDENT, 'Student')
+    )
+    role = models.CharField(max_length=10, 
+                            choices=ROLE_CHOICES, 
+                            null=True)
+
     objects = SailUserManager()
 
     def __str__(self):
@@ -54,6 +64,7 @@ class SailUser(AbstractUser):
 class Teacher(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
 
+    # REQUIRED FIELDS
     major = models.CharField(max_length=50)
 
     FRESHMAN = 'Freshman'
@@ -76,7 +87,7 @@ class Teacher(models.Model):
 class Student(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
 
-    #REQUIRED FIELDS
+    # REQUIRED FIELDS
     MALE = 'Male'
     FEMALE = 'Female'
     NON_BIN = 'Non_Binary'
@@ -128,7 +139,7 @@ class Student(models.Model):
     parent_phone_number = models.PositiveIntegerField()
     parent_email = models.EmailField()
 
-    #OPTIONAL FIELDS (specified with blank=True)
+    # OPTIONAL FIELDS (specified with blank=True)
     dietary_restrictions = models.CharField(max_length=50, blank=True)
     home_state = models.CharField(max_length=2, blank=True)
     admitted_student = models.BooleanField(blank=True)

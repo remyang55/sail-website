@@ -59,6 +59,7 @@ def register_teacher(request):
         if u_form.is_valid() and p_form.is_valid():
             user = u_form.save(commit=False)
             user.is_active = False
+            user.role = get_user_model().TEACHER
             user.save()
 
             teacher = p_form.save(commit=False)
@@ -84,6 +85,7 @@ def register_student(request):
         if u_form.is_valid() and p_form.is_valid():
             user = u_form.save(commit=False)
             user.is_active = False
+            user.role = get_user_model().STUDENT
             user.save()
 
             student = p_form.save(commit=False)
