@@ -6,7 +6,7 @@
             <div class="media-body">
                 <h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h2>
                 <p class="text-secondary">{{ user.email }}</p>
-                <p>{{ user.sailparticipant.role }}</p>
+                <p>{{ user.role }}</p>
             </div>
         </div>
         
@@ -23,5 +23,16 @@
                 <button class="btn btn-outline-danger" type="submit" name="action" value="Delete" onclick="return confirm('Are you sure? This will permanently delete your account!')">Delete</button>
             </div>
         </form>
+
+        {% if user.role == "Teacher" %}
+            <legend class="border-bottom">My Courses</legend>
+            <small class="text-muted">Click on a course to view, update, or delete it.</small>
+            <div class="mt-3">
+                {% for course in user.teacher.course_set.all %}
+                    <a class="btn btn-outline-info" href="{% url 'courses_detail' course.id %}">{{ course }}</a>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
     </div>
 {% endblock content %}
