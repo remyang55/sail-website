@@ -5,6 +5,7 @@ from django.views.generic import (ListView,
                                   DetailView,
                                   CreateView,
                                   UpdateView,
+                                  DeleteView
 )
 from .models import Course
 
@@ -27,8 +28,7 @@ class CourseCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         return self.request.user.role == get_user_model().TEACHER
 
     def form_valid(self, form):
-        form.instance.save()
-        form.instance.teachers.add(self.request.user.teacher)
+        form.instance.teacher = self.request.user.teacher
         return super().form_valid(form)
 
 class CourseUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -44,6 +44,15 @@ class CourseUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             and self.request.user.teacher == course.teacher)
 
     def form_valid(self, form):
-        form.instance.save()
-        form.instance.teachers.add(self.request.user.teacher)
+        form.instance.teacher = self.request.user.teacher
         return super().form_valid(form)
+
+class CourseDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Course
+    context_object_name = 'course'
+    success_url = "/"
+
+    def test_func(self):
+        course = self.get_object()
+        return (self.request.user.role == get_user_model().TEACHER
+            and self.request.user.teacher == course.teacher)

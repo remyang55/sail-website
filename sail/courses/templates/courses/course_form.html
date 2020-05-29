@@ -5,13 +5,21 @@
         <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Create Course</legend>
+                {% if course %}
+                    <legend class="border-bottom mb-4">Update Course</legend>
+                {% else %}
+                    <legend class="border-bottom mb-4">Create Course</legend>
+                {% endif %}
                 <div class="w-50">
                     {{ form|crispy }}
                 </div>
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-outline-primary" type="submit">Create</button>
+                {% if course %}
+                    <button class="btn btn-outline-primary" type="submit">Update</button>
+                {% else %}
+                    <button class="btn btn-outline-primary" type="submit">Create</button>
+                {% endif %}
             </div>
         </form>
     </div>
