@@ -1,4 +1,5 @@
 {% extends "public/base.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
     <div class="row">
         <div class="col-8">
@@ -19,7 +20,11 @@
         </div>
         <div class="col">
             <div class="content-section">
-              <h3>Filter</h3>
+                <h3>Filter Classes</h3>
+                <form method="GET">
+                    {{ tag_form|crispy }}
+                    <button class="btn btn-outline-primary" type="submit">Filter</button>
+                </form>
             </div>
           </div>
     </div>

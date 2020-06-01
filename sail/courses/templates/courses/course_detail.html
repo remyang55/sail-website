@@ -16,4 +16,9 @@
             <p class="article-content">{{ course.description }}</p>
         </div>
     </article>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            <a href="{% url 'courses_list' %}">Back to Courses</a>
+        </small>
+    </div>
 {% endblock content %}

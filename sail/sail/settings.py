@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'public.apps.PublicConfig',
     
     'crispy_forms',
+    'taggit',
 
     'django.contrib.admin',
     'django.contrib.auth',

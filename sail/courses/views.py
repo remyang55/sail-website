@@ -8,10 +8,27 @@ from django.views.generic import (ListView,
                                   DeleteView
 )
 from .models import Course
+from .forms import TagForm
 
 class CourseListView(ListView):
     model = Course
     context_object_name = 'courses'
+
+    def get_context_data(self, **kwargs):
+        context = super(CourseListView, self).get_context_data(**kwargs)
+        context['tag_form'] = TagForm()
+        return context
+    
+    def get_queryset(self):
+        selected_tags = self.request.GET.getlist('tags')
+
+        if not selected_tags:
+            return Course.objects.all()
+        else:
+            filtered_courses = Course.objects.all()
+            for tag in selected_tags:
+                filtered_courses = filtered_courses.filter(tags__name=tag)
+            return filtered_courses
 
 class CourseDetailView(DetailView):
     model = Course

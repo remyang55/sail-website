@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from users.models import Teacher
+from taggit.managers import TaggableManager
 
 class Course(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
@@ -13,6 +14,7 @@ class Course(models.Model):
     approved = models.BooleanField(default=False)
     last_modified = models.DateTimeField(auto_now=True)
     time_created = models.DateTimeField(auto_now_add=True)
+    tags = TaggableManager()
 
     def __str__(self):
         return self.course_name
