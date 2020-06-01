@@ -16,7 +16,7 @@
                                 <form method="POST" style="display:inline">
                                     {% csrf_token %}
                                     {% if course in user.student.course_set.all %}
-                                        <button class="btn btn-success btn-sm ml-3" type="submit" name="{{ course.id }}" value="Deregister">Deregister</button>
+                                        <button class="btn btn-success btn-sm ml-3" type="submit" name="{{ course.id }}" value="Unregister">Unregister</button>
                                     {% else %}
                                         <button class="btn btn-success btn-sm ml-3" type="submit" name="{{ course.id }}" value="Register">Register</button>
                                     {% endif %}

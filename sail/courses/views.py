@@ -37,7 +37,7 @@ class CourseListView(ListView):
             for course, action in request.POST.items():
                 if action == 'Register':
                     self.request.user.student.course_set.add(course)
-                elif action == 'Deregister':
+                elif action == 'Unregister':
                     self.request.user.student.course_set.remove(course)
         return redirect('courses_list')
 
