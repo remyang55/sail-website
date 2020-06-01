@@ -14,6 +14,7 @@ from .forms import TagForm
 class CourseListView(ListView):
     model = Course
     context_object_name = 'courses'
+    paginate_by = 3
 
     def get_context_data(self, **kwargs):
         context = super(CourseListView, self).get_context_data(**kwargs)
