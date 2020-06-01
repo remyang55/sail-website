@@ -18,6 +18,9 @@ class Course(models.Model):
     time_created = models.DateTimeField(auto_now_add=True)
     tags = TaggableManager()
 
+    class Meta:
+        ordering = ["course_name"]
+
     def __str__(self):
         return self.course_name
     

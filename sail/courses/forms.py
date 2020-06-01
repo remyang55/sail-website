@@ -7,7 +7,7 @@ class TagForm(forms.Form):
 
     tags = forms.MultipleChoiceField(
         required=False,
-        widget=forms.CheckboxSelectMultiple,
+        widget=forms.CheckboxSelectMultiple(attrs={'onchange':'form.submit();'}),
         choices=tag_choices,
         label=False
     )

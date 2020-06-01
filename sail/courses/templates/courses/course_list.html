@@ -53,9 +53,8 @@
                 <h3>Filter Classes</h3>
                 <form method="GET">
                     {{ tag_form|crispy }}
-                    <button class="btn btn-outline-primary" type="submit">Filter</button>
                 </form>
-                <a class="btn btn-outline-primary mt-2" href="{% url 'courses_list' %}">Clear Filters</a>
+                <a class="btn btn-outline-primary mt-1" href="{% url 'courses_list' %}">Clear Filters</a>
             </div>
           </div>
     </div>
