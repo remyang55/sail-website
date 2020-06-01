@@ -1,10 +1,12 @@
 from django.db import models
 from django.urls import reverse
-from users.models import Teacher
+from users.models import Teacher, Student
 from taggit.managers import TaggableManager
 
 class Course(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    students = models.ManyToManyField(Student)
+    
     course_name = models.CharField(max_length=100)
     short_description = models.CharField(max_length=255, help_text="Students will see this description when they scroll through all the available courses.")
     description = models.TextField()

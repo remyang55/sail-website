@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (ListView,
                                   DetailView,
@@ -29,6 +30,15 @@ class CourseListView(ListView):
             for tag in selected_tags:
                 filtered_courses = filtered_courses.filter(tags__name=tag)
             return filtered_courses
+    
+    def post(self, request, *args, **kwargs):
+        if self.request.user.role == get_user_model().STUDENT:
+            for course, action in request.POST.items():
+                if action == 'Register':
+                    self.request.user.student.course_set.add(course)
+                elif action == 'Deregister':
+                    self.request.user.student.course_set.remove(course)
+        return redirect('courses_list')
 
 class CourseDetailView(DetailView):
     model = Course
@@ -73,3 +83,8 @@ class CourseDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         course = self.get_object()
         return (self.request.user.role == get_user_model().TEACHER
             and self.request.user.teacher == course.teacher)
+
+@login_required
+@user_passes_test(lambda user: user.role == get_user_model().STUDENT)
+def student_courses(request):
+    return render(request, 'courses/my_courses.html')

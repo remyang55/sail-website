@@ -11,6 +11,16 @@
                             <a class="mr-2" href="#">{{ course.teacher }}</a>
                             <!-- <small class="text-muted">Created on {{ course.time_created|date:"F d, Y" }}</small> -->
                             <small class="text-muted">Course length: {{ course.course_length }} minutes</small>
+                            {% if user.student %}
+                                <form method="POST" style="display:inline">
+                                    {% csrf_token %}
+                                    {% if course in user.student.course_set.all %}
+                                        <button class="btn btn-success btn-sm ml-3" type="submit" name="{{ course.id }}" value="Deregister">Deregister</button>
+                                    {% else %}
+                                        <button class="btn btn-success btn-sm ml-3" type="submit" name="{{ course.id }}" value="Register">Register</button>
+                                    {% endif %}
+                                </form>
+                            {% endif %}
                         </div>
                         <h2><a class="article-title" href="{% url 'courses_detail' course.id %}">{{ course.course_name }}</a></h2>
                         <p class="article-content">{{ course.short_description }}</p>

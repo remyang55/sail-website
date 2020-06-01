@@ -41,8 +41,10 @@
                     <!-- Navbar Right Side -->
                     <div class="navbar-nav">
                         {% if user.is_authenticated %}
-                            {% if user.role == "Teacher" %}
+                            {% if user.teacher %}
                                 <a class="nav-item nav-link" href="{% url 'courses_create' %}">Create Course</a>
+                            {% elif user.student %}
+                                <a class="nav-item nav-link" href="{% url 'student_courses' %}">My Courses</a>
                             {% endif %}
                             <a class="nav-item nav-link" href="{% url 'users_profile' %}">Profile</a>
                             <a class="nav-item nav-link" href="{% url 'users_logout' %}">Logout</a>
