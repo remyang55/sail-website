@@ -18,8 +18,15 @@ class CourseListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(CourseListView, self).get_context_data(**kwargs)
-        context['tag_form'] = TagForm(initial=self.request.GET)
+        context['tag_form'] = TagForm(initial=self.get_initial())
         return context
+    
+    def get_initial(self):
+        if self.request.method == 'GET':
+            initial = {}
+            initial['tags'] = self.request.GET.getlist('tags')
+            return initial
+        return super().get_initial()
     
     def get_queryset(self):
         selected_tags = self.request.GET.getlist('tags')
