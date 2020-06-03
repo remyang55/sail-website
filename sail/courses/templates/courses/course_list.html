@@ -19,8 +19,13 @@
                             {% if user.student %}
                                 <br>
                                 {% for section in course.section_set.all %}
-                                    <div style="display:inline-block" class="mr-3 mt-2 mb-1">
-                                        <small class="text-muted">Time: {{ section.start_time|date:"H:i" }} - {{ section.start_time|add:course.course_duration|date:"H:i" }}</small>
+                                    <div class="mr-3 mt-2 mb-1">
+                                        <small class="text-muted"><strong>Time:</strong> {{ section.start_time|date:"H:i" }} - {{ section.start_time|add:course.course_duration|date:"H:i" }}, </small>
+                                        {% if section.course.capacity_limit is not None and section.course.capacity_limit < section.room.max_capacity %}
+                                            <small class="text-muted"><strong>Seats Filled:</strong> {{ section.students.all.count }} of {{ section.course.capacity_limit }}</small>
+                                        {% else %}
+                                            <small class="text-muted"><strong>Seats Filled:</strong> {{ section.students.all.count }} of {{ section.room.max_capacity }}</small>
+                                        {% endif %}
                                         <form method="POST" style="display:inline">
                                             {% csrf_token %}
                                             {% if section in user.student.section_set.all %}

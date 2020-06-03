@@ -5,7 +5,7 @@
     <div class="mt-3">
         {% for section in sections %}
             <div class="mb-3">
-                <h3>{{ section.start_time|date:"H:i" }} at {{ section.room }}</h3>
+                <h4>{{ section.start_time|date:"H:i" }} at {{ section.room }}</h4>
                 <a class="btn btn-outline-info" href="{% url 'courses_detail' section.course.id %}">{{ section.course }}</a>
             </div>
         {% endfor %}

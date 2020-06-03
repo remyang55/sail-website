@@ -6,7 +6,11 @@
             <div class="media-body">
                 <h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h2>
                 <p class="text-secondary">{{ user.email }}</p>
-                <p>{{ user.role }}</p>
+                {% if user.student.admitted_student %}
+                    <p>Admitted Student</p>
+                {% else %}
+                    <p>{{ user.role }}</p>
+                {% endif %} 
             </div>
         </div>
         

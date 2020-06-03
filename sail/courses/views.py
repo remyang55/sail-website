@@ -56,6 +56,11 @@ class CourseListView(ListView):
                     # s stands for section, rs stands for already registered section
                     s = Section.objects.get(pk=section_id)
 
+                    if (s.students.all().count() >= s.room.max_capacity
+                        or (s.course.capacity_limit is not None and s.students.all().count() >= s.course.capacity_limit)):
+                        messages.warning(request, 'Cannot Register: Section is full')
+                        return redirect('courses_list')
+
                     for rs in self.request.user.student.section_set.all():
                         if s.course == rs.course:
                             messages.warning(request, 'Cannot Register: Already registered for another section of the same course')
@@ -85,6 +90,11 @@ class CourseDetailView(DetailView):
 
                     # s stands for section, rs stands for already registered section
                     s = Section.objects.get(pk=section_id)
+
+                    if ((s.students.all().count() >= s.room.max_capacity)
+                        or (s.course.capacity_limit is not None and s.students.all().count() >= s.course.capacity_limit)):
+                        messages.warning(request, 'Cannot Register: Section is full')
+                        return redirect('courses_list')
 
                     for rs in self.request.user.student.section_set.all():
                         if s.course == rs.course:
