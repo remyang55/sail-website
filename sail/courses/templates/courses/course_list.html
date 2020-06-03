@@ -5,24 +5,25 @@
     <div class="row">
         <div class="col-8">
             {% for course in courses %}
-                <article class="media content-section">
+                <article class="media content-section mb-2">
                     <div class="media-body">
                         <div class="article-metadata">
-                            <span class="mr-2">By</span>
-                            <a class="mr-2" href="#">{{ course.teacher }}</a>
-                            <small class="text-muted">Time: {{ course.start_time|date:"H:i" }} - {{ course.start_time|add:course.course_duration|date:"H:i" }}</small>
-                            {% if user.student %}
-                                <form method="POST" style="display:inline">
-                                    {% csrf_token %}
-                                    {% if course in user.student.course_set.all %}
-                                        <button class="btn btn-success btn-sm ml-3" type="submit" name="{{ course.id }}" value="Unregister">Unregister</button>
-                                    {% else %}
-                                        <button class="btn btn-success btn-sm ml-3" type="submit" name="{{ course.id }}" value="Register">Register</button>
-                                    {% endif %}
-                                </form>
-                            {% endif %}
+                            <h3 style="display:inline"><u><a id="coursename" href="{% url 'courses_detail' course.id %}">{{ course.course_name }}</a></u></h3>
+                            <span class="ml-1">by {{ course.teacher }}</span>
+                            <div class="float-right">
+                                <small class="text-muted">Time: {{ course.start_time|date:"H:i" }} - {{ course.start_time|add:course.course_duration|date:"H:i" }}</small>
+                                {% if user.student %}
+                                    <form method="POST" style="display:inline">
+                                        {% csrf_token %}
+                                        {% if course in user.student.course_set.all %}
+                                            <button class="btn btn-success btn-sm ml-3" type="submit" name="{{ course.id }}" value="Unregister">Unregister</button>
+                                        {% else %}
+                                            <button class="btn btn-success btn-sm ml-3" type="submit" name="{{ course.id }}" value="Register">Register</button>
+                                        {% endif %}
+                                    </form>
+                                {% endif %}
+                            </div>
                         </div>
-                        <h2><a class="article-title" href="{% url 'courses_detail' course.id %}">{{ course.course_name }}</a></h2>
                         <p class="article-content mb-1">{{ course.short_description }}</p>
                         <small class="text-muted">Tags: {{ course.tags.all|join:", " }}</small>
                     </div>

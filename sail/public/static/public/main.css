@@ -54,11 +54,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .article-title {
-    color: #444444;
+    color: #658ae9;
 }
 
-a.article-title:hover {
-    color: #afbee5;
+#coursename:hover {
+    color: #658ae9;
     text-decoration: none;
 }
 
