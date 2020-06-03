@@ -50,11 +50,21 @@
         </div>
         <div class="col">
             <div class="content-section">
-                <h3>Filter Classes</h3>
+                <legend class="border-bottom mb-3">Filter Classes</legend>
                 <form method="GET">
-                    {{ tag_form|crispy }}
+                    <fieldset class="form-group">
+                        <h6>Title contains</h6>
+                        <input type="search" name="course_name_contains" class="mb-3 w-75">
+                        <h6>Course description contains</h6>
+                        <input type="search" name="description_contains" class="w-75">
+                        <div class="form-group mb-4">
+                            <button class="btn btn-outline-primary mt-2" type="submit">Search</button>
+                        </div>
+                        <h6>Tags</h6>
+                        {{ tag_form|crispy }}
+                    </fieldset> 
                 </form>
-                <a class="btn btn-outline-primary mt-1" href="{% url 'courses_list' %}">Clear Filters</a>
+                <a class="btn btn-outline-primary" href="{% url 'courses_list' %}">Clear Filters</a>
             </div>
           </div>
     </div>

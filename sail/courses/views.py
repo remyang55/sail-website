@@ -30,14 +30,22 @@ class CourseListView(ListView):
     
     def get_queryset(self):
         selected_tags = self.request.GET.getlist('tags')
+        course_name_contains = self.request.GET.get('course_name_contains')
+        description_contains = self.request.GET.get('description_contains')
 
-        if not selected_tags:
-            return Course.objects.all()
-        else:
-            filtered_courses = Course.objects.all()
+        queryset = Course.objects.all()
+
+        if course_name_contains != '' and course_name_contains is not None:
+            queryset = queryset.filter(course_name__icontains=course_name_contains)
+        
+        if description_contains != '' and description_contains is not None:
+            queryset = queryset.filter(description__icontains=description_contains)
+
+        if len(selected_tags) != 0:
             for tag in selected_tags:
-                filtered_courses = filtered_courses.filter(tags__name=tag)
-            return filtered_courses
+                queryset = queryset.filter(tags__name=tag)
+        
+        return queryset
     
     def post(self, request, *args, **kwargs):
         if self.request.user.role == get_user_model().STUDENT:
