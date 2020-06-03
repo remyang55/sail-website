@@ -24,7 +24,8 @@
                             {% endif %}
                         </div>
                         <h2><a class="article-title" href="{% url 'courses_detail' course.id %}">{{ course.course_name }}</a></h2>
-                        <p class="article-content">{{ course.short_description }}</p>
+                        <p class="article-content mb-1">{{ course.short_description }}</p>
+                        <small class="text-muted">Tags: {{ course.tags.all|join:", " }}</small>
                     </div>
                 </article>
             {% endfor %}
