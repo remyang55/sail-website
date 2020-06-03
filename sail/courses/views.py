@@ -72,6 +72,26 @@ class CourseDetailView(DetailView):
     model = Course
     context_object_name = 'course'
 
+    def post(self, request, *args, **kwargs):
+        if self.request.user.role == get_user_model().STUDENT:
+            for course, action in request.POST.items():
+                if action == 'Register':
+                    # c stands for course, rc stands for already registered course
+
+                    c = Course.objects.get(pk=course)
+                    for rc in self.request.user.student.course_set.all():
+                        if ((c.start_time == rc.start_time)
+                            or (c.start_time < rc.start_time
+                                and c.start_time + c.course_duration > rc.start_time)
+                            or (c.start_time > rc.start_time
+                                and rc.start_time + rc.course_duration > c.start_time)):
+                            messages.warning(request, 'Cannot Register: Time Conflict')
+                            return redirect('courses_list')
+                    self.request.user.student.course_set.add(course)
+                elif action == 'Unregister':
+                    self.request.user.student.course_set.remove(course)
+        return redirect('courses_list')
+
 class CourseCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Course
     context_object_name = 'course'
@@ -115,4 +135,5 @@ class CourseDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 @login_required
 @user_passes_test(lambda user: user.role == get_user_model().STUDENT)
 def student_courses(request):
-    return render(request, 'courses/my_courses.html')
+    ordered_courses = request.user.student.course_set.order_by('start_time')
+    return render(request, 'courses/my_courses.html', {'courses':ordered_courses})
