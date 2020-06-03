@@ -18,7 +18,7 @@ class Course(models.Model):
     approved = models.BooleanField(default=False)
     last_modified = models.DateTimeField(auto_now=True)
     time_created = models.DateTimeField(auto_now_add=True)
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
 
     start_time = models.DateTimeField(default=datetime.datetime(2020, 4, 4, 10))
 
