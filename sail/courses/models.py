@@ -5,9 +5,17 @@ from taggit.managers import TaggableManager
 
 import datetime
 
+class Room(models.Model):
+    room_name = models.CharField(max_length=20)
+    max_capacity = models.PositiveSmallIntegerField(default=20)
+
+    def __str__(self):
+        return self.room_name
+
 class Course(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     students = models.ManyToManyField(Student, blank=True)
+    room = models.ForeignKey(Room, on_delete=models.SET_NULL, blank=True, null=True)
     
     course_name = models.CharField(max_length=100)
     short_description = models.CharField(max_length=255, help_text="Students will see this description when they scroll through all the available courses.")
@@ -20,7 +28,7 @@ class Course(models.Model):
     time_created = models.DateTimeField(auto_now_add=True)
     tags = TaggableManager(blank=True)
 
-    start_time = models.DateTimeField(default=datetime.datetime(2020, 4, 4, 10))
+    start_time = models.DateTimeField(blank=True, null=True)
 
     @property
     def course_duration(self):
