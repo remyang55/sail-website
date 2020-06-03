@@ -4,7 +4,8 @@
         <div class="media-body">
             <div class="article-metadata">
                 <a class="mr-2" href="#">{{ course.teacher }}</a>
-                <small class="text-muted">Created on {{ course.time_created|date:"F d, Y" }}</small>
+                <small class="text-muted">Start Time: {{ course.start_time }} | </small>
+                <small class="text-muted">Course length: {{ course.course_length }} minutes</small>
                 {% if course.teacher == user.teacher %}
                     <div>
                         <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'courses_update' course.id %}">Update</a>

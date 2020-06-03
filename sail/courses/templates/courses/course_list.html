@@ -11,6 +11,7 @@
                             <span class="mr-2">By</span>
                             <a class="mr-2" href="#">{{ course.teacher }}</a>
                             <!-- <small class="text-muted">Created on {{ course.time_created|date:"F d, Y" }}</small> -->
+                            <small class="text-muted">Start Time: {{ course.start_time }} | </small>
                             <small class="text-muted">Course length: {{ course.course_length }} minutes</small>
                             {% if user.student %}
                                 <form method="POST" style="display:inline">
