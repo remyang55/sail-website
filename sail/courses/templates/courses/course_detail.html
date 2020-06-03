@@ -3,8 +3,8 @@
     <article class="media content-section">
         <div class="media-body">
             <div class="article-metadata">
-                <a class="mr-2" href="#">{{ course.teacher }}</a>
-                <small class="text-muted">Time: {{ course.start_time|date:"H:i" }} - {{ course.start_time|add:course.course_duration|date:"H:i" }}</small>
+                <h2 class="article-title" style="display:inline">{{ course.course_name }}</h2>
+                <span class="ml-1 float-right">by {{ course.teacher }}</span>
                 {% if course.teacher == user.teacher %}
                     <div>
                         <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'courses_update' course.id %}">Update</a>
@@ -12,17 +12,22 @@
                     </div> 
                 {% endif %}
                 {% if user.student %}
-                    <form method="POST" style="display:inline">
-                        {% csrf_token %}
-                        {% if course in user.student.course_set.all %}
-                            <button class="btn btn-success btn-sm ml-3" type="submit" name="{{ course.id }}" value="Unregister">Unregister</button>
-                        {% else %}
-                            <button class="btn btn-success btn-sm ml-3" type="submit" name="{{ course.id }}" value="Register">Register</button>
-                        {% endif %}
-                    </form>
+                    <br>
+                    {% for section in course.section_set.all %}
+                        <div style="display:inline-block" class="mr-3 mt-2 mb-1">
+                            <small class="text-muted">Time: {{ section.start_time|date:"H:i" }} - {{ section.start_time|add:course.course_duration|date:"H:i" }}</small>
+                            <form method="POST" style="display:inline">
+                                {% csrf_token %}
+                                {% if section in user.student.section_set.all %}
+                                    <button class="btn btn-success btn-sm ml-2" type="submit" name="{{ section.id }}" value="Unregister">Unregister</button>
+                                {% else %}
+                                    <button class="btn btn-success btn-sm ml-2" type="submit" name="{{ section.id }}" value="Register">Register</button>
+                                {% endif %}
+                            </form>
+                        </div>
+                    {% endfor %}
                 {% endif %}
             </div>
-            <h2 class="article-title mt-2">{{ course.course_name }}</h2>
             <p class="article-content">{{ course.description }}</p>
             <small class="text-muted">Tags: {{ course.tags.all|join:", " }}</small>
         </div>

@@ -6,9 +6,7 @@ from taggit.managers import TaggableManager
 import datetime
 
 class Course(models.Model):
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    students = models.ManyToManyField(Student, blank=True)
-    
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)    
     course_name = models.CharField(max_length=100)
     short_description = models.CharField(max_length=255, help_text="Students will see this description when they scroll through all the available courses.")
     description = models.TextField()
@@ -44,6 +42,7 @@ class Section(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.SET_NULL, blank=True, null=True)
     start_time = models.DateTimeField(blank=True, null=True)
+    students = models.ManyToManyField(Student, blank=True)
 
     def __str__(self):
         return f'{self.course}, {self.start_time.strftime("%H:%M")}'

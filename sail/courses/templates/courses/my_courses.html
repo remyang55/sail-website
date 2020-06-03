@@ -3,10 +3,10 @@
     <legend class="border-bottom">My Courses</legend>
     <small class="text-muted">Click on a course to view it.</small>
     <div class="mt-3">
-        {% for course in courses %}
+        {% for section in sections %}
             <div class="mb-3">
-                <h3>{{ course.start_time|date:"H:i" }}</h3>
-                <a class="btn btn-outline-info" href="{% url 'courses_detail' course.id %}">{{ course }}</a>
+                <h3>{{ section.start_time|date:"H:i" }} at {{ section.room }}</h3>
+                <a class="btn btn-outline-info" href="{% url 'courses_detail' section.course.id %}">{{ section.course }}</a>
             </div>
         {% endfor %}
     </div>

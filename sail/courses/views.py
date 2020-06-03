@@ -9,13 +9,13 @@ from django.views.generic import (ListView,
                                   UpdateView,
                                   DeleteView
 )
-from .models import Course
+from .models import Course, Section
 from .forms import TagForm
 
 class CourseListView(ListView):
     model = Course
     context_object_name = 'courses'
-    paginate_by = 3
+    paginate_by = 8
 
     def get_context_data(self, **kwargs):
         context = super(CourseListView, self).get_context_data(**kwargs)
@@ -50,22 +50,28 @@ class CourseListView(ListView):
     
     def post(self, request, *args, **kwargs):
         if self.request.user.role == get_user_model().STUDENT:
-            for course, action in request.POST.items():
+            for section_id, action in request.POST.items():
                 if action == 'Register':
-                    # c stands for course, rc stands for already registered course
 
-                    c = Course.objects.get(pk=course)
-                    for rc in self.request.user.student.course_set.all():
-                        if ((c.start_time == rc.start_time)
-                            or (c.start_time < rc.start_time
-                                and c.start_time + c.course_duration > rc.start_time)
-                            or (c.start_time > rc.start_time
-                                and rc.start_time + rc.course_duration > c.start_time)):
+                    # s stands for section, rs stands for already registered section
+                    s = Section.objects.get(pk=section_id)
+
+                    for rs in self.request.user.student.section_set.all():
+                        if s.course == rs.course:
+                            messages.warning(request, 'Cannot Register: Already registered for another section of the same course')
+                            return redirect('courses_list')
+                        
+                        if ((s.start_time == rs.start_time)
+                            or (s.start_time < rs.start_time
+                                and s.start_time + s.course.course_duration > rs.start_time)
+                            or (s.start_time > rs.start_time
+                                and rs.start_time + rs.course.course_duration > s.start_time)):
                             messages.warning(request, 'Cannot Register: Time Conflict')
                             return redirect('courses_list')
-                    self.request.user.student.course_set.add(course)
+
+                    self.request.user.student.section_set.add(section_id)
                 elif action == 'Unregister':
-                    self.request.user.student.course_set.remove(course)
+                    self.request.user.student.section_set.remove(section_id)
         return redirect('courses_list')
 
 class CourseDetailView(DetailView):
@@ -74,22 +80,28 @@ class CourseDetailView(DetailView):
 
     def post(self, request, *args, **kwargs):
         if self.request.user.role == get_user_model().STUDENT:
-            for course, action in request.POST.items():
+            for section_id, action in request.POST.items():
                 if action == 'Register':
-                    # c stands for course, rc stands for already registered course
 
-                    c = Course.objects.get(pk=course)
-                    for rc in self.request.user.student.course_set.all():
-                        if ((c.start_time == rc.start_time)
-                            or (c.start_time < rc.start_time
-                                and c.start_time + c.course_duration > rc.start_time)
-                            or (c.start_time > rc.start_time
-                                and rc.start_time + rc.course_duration > c.start_time)):
+                    # s stands for section, rs stands for already registered section
+                    s = Section.objects.get(pk=section_id)
+
+                    for rs in self.request.user.student.section_set.all():
+                        if s.course == rs.course:
+                            messages.warning(request, 'Cannot Register: Already registered for another section of the same course')
+                            return redirect('courses_list')
+                        
+                        if ((s.start_time == rs.start_time)
+                            or (s.start_time < rs.start_time
+                                and s.start_time + s.course.course_duration > rs.start_time)
+                            or (s.start_time > rs.start_time
+                                and rs.start_time + rs.course.course_duration > s.start_time)):
                             messages.warning(request, 'Cannot Register: Time Conflict')
                             return redirect('courses_list')
-                    self.request.user.student.course_set.add(course)
+
+                    self.request.user.student.section_set.add(section_id)
                 elif action == 'Unregister':
-                    self.request.user.student.course_set.remove(course)
+                    self.request.user.student.section_set.remove(section_id)
         return redirect('courses_list')
 
 class CourseCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
@@ -135,5 +147,5 @@ class CourseDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 @login_required
 @user_passes_test(lambda user: user.role == get_user_model().STUDENT)
 def student_courses(request):
-    ordered_courses = request.user.student.course_set.order_by('start_time')
-    return render(request, 'courses/my_courses.html', {'courses':ordered_courses})
+    ordered_sections = request.user.student.section_set.order_by('start_time')
+    return render(request, 'courses/my_courses.html', {'sections':ordered_sections})
