@@ -81,12 +81,16 @@
                         <div class="form-group mb-4">
                             <button class="btn btn-outline-primary mt-2" type="submit">Search</button>
                         </div>
+
                         <h6>Tags</h6>
                         {{ tag_form|crispy }}
+
+                        <h6>Starting Time</h6>
+                        {{ time_form|crispy }}
                     </fieldset> 
                 </form>
                 <a class="btn btn-outline-primary" href="{% url 'courses_list' %}">Clear Filters</a>
             </div>
-          </div>
+        </div>
     </div>
 {% endblock content %}

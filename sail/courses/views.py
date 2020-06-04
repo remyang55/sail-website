@@ -10,7 +10,9 @@ from django.views.generic import (ListView,
                                   DeleteView
 )
 from .models import Course, Section
-from .forms import TagForm
+from .forms import TagForm, TimeForm
+
+import datetime
 
 class CourseListView(ListView):
     model = Course
@@ -20,17 +22,20 @@ class CourseListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(CourseListView, self).get_context_data(**kwargs)
         context['tag_form'] = TagForm(initial=self.get_initial())
+        context['time_form'] = TimeForm(initial=self.get_initial())
         return context
     
     def get_initial(self):
         if self.request.method == 'GET':
             initial = {}
             initial['tags'] = self.request.GET.getlist('tags')
+            initial['times'] = self.request.GET.getlist('times')
             return initial
         return super().get_initial()
     
     def get_queryset(self):
         selected_tags = self.request.GET.getlist('tags')
+        selected_times = self.request.GET.getlist('times')
         course_name_contains = self.request.GET.get('course_name_contains')
         description_contains = self.request.GET.get('description_contains')
 
@@ -45,6 +50,10 @@ class CourseListView(ListView):
         if len(selected_tags) != 0:
             for tag in selected_tags:
                 queryset = queryset.filter(tags__name=tag)
+        
+        if len(selected_times) != 0:
+            for time in selected_times:
+                queryset = queryset.filter(section__start_time__time=datetime.datetime.strptime(time, "%H:%M").time())
         
         return queryset
     

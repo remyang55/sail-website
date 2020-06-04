@@ -119,4 +119,5 @@ def profile(request):
             return redirect('sail_home')
     else:
         form = SailUserUpdateForm(instance=request.user)
+
     return render(request, 'users/profile.html', {'form':form})
