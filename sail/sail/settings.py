@@ -31,14 +31,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'courses.apps.CoursesConfig',
-    'users.apps.UsersConfig',
-    'public.apps.PublicConfig',
-    
-    'crispy_forms',
-    'taggit',
-    'qrcode',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,6 +38,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    
+    'crispy_forms',
+    'taggit',
+    'qrcode',
+    'tinymce',
+
+    # Important: Place custom apps below Django apps
+    'courses.apps.CoursesConfig',
+    'users.apps.UsersConfig',
+    'public.apps.PublicConfig',
+    'staff.apps.StaffConfig',
 ]
 
 MIDDLEWARE = [

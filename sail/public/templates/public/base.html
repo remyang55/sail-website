@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     
     <link rel="stylesheet" type="text/css" href="{% static 'public/main.css' %}">
-    {% block css %}{% endblock css %}
 
     <link rel="shortcut icon" type="image/png" href="{% static 'public/favicon.ico' %}">
     {% if title %}
@@ -21,6 +20,7 @@
     {% else %}
         <title>Illinois CS Sail</title>
     {% endif %}
+    {% block head %}{% endblock head %}
 </head>
 <body>
     <header class="site-header">
@@ -41,6 +41,9 @@
                     <!-- Navbar Right Side -->
                     <div class="navbar-nav">
                         {% if user.is_authenticated %}
+                            {% if user.is_staff %}
+                                <a class="nav-item nav-link" href="{% url 'staff_actions' %}">Staff Actions</a>
+                            {% endif %}
                             {% if user.teacher %}
                                 <a class="nav-item nav-link" href="{% url 'courses_create' %}">Create Course</a>
                             {% elif user.student %}
