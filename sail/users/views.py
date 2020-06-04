@@ -20,7 +20,7 @@ from .forms import (SailUserCreationForm,
 )
 
 def register(request):
-    return render(request, 'users/register.html')
+    return render(request, 'users/register.html', {'title':'Register'})
 
 # Credits to https://blog.hlab.tech/part-ii-how-to-sign-up-user-and-send-confirmation-email-in-django-2-1-and-python-3-6/
 def _send_register_confirmation_email(request, user, to_email):
@@ -74,7 +74,7 @@ def register_teacher(request):
         u_form = SailUserCreationForm()
         p_form = TeacherCreationForm()
     
-    context = {'u_form':u_form, 'p_form':p_form}
+    context = {'u_form':u_form, 'p_form':p_form, 'title':'Teacher Register'}
 
     return render(request, 'users/register_form.html', context)
 
@@ -100,7 +100,7 @@ def register_student(request):
         u_form = SailUserCreationForm()
         p_form = StudentCreationForm()
     
-    context = {'u_form':u_form, 'p_form':p_form}
+    context = {'u_form':u_form, 'p_form':p_form, 'title':'Student Register'}
 
     return render(request, 'users/register_form.html', context)
 
@@ -120,4 +120,4 @@ def profile(request):
     else:
         form = SailUserUpdateForm(instance=request.user)
 
-    return render(request, 'users/profile.html', {'form':form})
+    return render(request, 'users/profile.html', {'form':form, 'title':'Profile'})

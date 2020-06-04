@@ -20,9 +20,10 @@ class CourseListView(ListView):
     paginate_by = 8
 
     def get_context_data(self, **kwargs):
-        context = super(CourseListView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['tag_form'] = TagForm(initial=self.get_initial())
         context['time_form'] = TimeForm(initial=self.get_initial())
+        context['title'] = 'Courses'
         return context
     
     def get_initial(self):
@@ -92,6 +93,11 @@ class CourseDetailView(DetailView):
     model = Course
     context_object_name = 'course'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f'Course - {self.get_object()}'
+        return context
+
     def post(self, request, *args, **kwargs):
         if self.request.user.role == get_user_model().STUDENT:
             for section_id, action in request.POST.items():
@@ -130,6 +136,11 @@ class CourseCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
               'prior_knowledge', 'course_length', 'capacity_limit'
     ]
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Create Course'
+        return context
+
     def test_func(self):
         return self.request.user.role == get_user_model().TEACHER
 
@@ -143,6 +154,11 @@ class CourseUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     fields = ['course_name', 'short_description', 'description',
               'prior_knowledge', 'course_length', 'capacity_limit'
     ]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f'Update Course - {self.get_object()}'
+        return context
 
     def test_func(self):
         course = self.get_object()
@@ -158,6 +174,11 @@ class CourseDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     context_object_name = 'course'
     success_url = "/"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f'Delete Course - {self.get_object()}'
+        return context
+
     def test_func(self):
         course = self.get_object()
         return (self.request.user.role == get_user_model().TEACHER
@@ -167,4 +188,4 @@ class CourseDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 @user_passes_test(lambda user: user.role == get_user_model().STUDENT)
 def student_courses(request):
     ordered_sections = request.user.student.section_set.order_by('start_time')
-    return render(request, 'courses/my_courses.html', {'sections':ordered_sections})
+    return render(request, 'courses/my_courses.html', {'sections':ordered_sections, 'title':'My Courses'})

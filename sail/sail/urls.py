@@ -26,7 +26,7 @@ urlpatterns = [
 
     path('my-courses/', courses_views.student_courses, name="student_courses"),
 
-    path('login/', auth_views.LoginView.as_view(template_name='users/login.html', redirect_authenticated_user=True), name='users_login'),
+    path('login/', auth_views.LoginView.as_view(template_name='users/login.html', redirect_authenticated_user=True, extra_context={'title': 'Login'}), name='users_login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='users_logout'),
 
     path('password-reset/', auth_views.PasswordResetView.as_view(template_name='users/password_reset.html'), name='password_reset'),
