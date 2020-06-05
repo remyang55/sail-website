@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'taggit',
     'qrcode',
     'tinymce',
+    'import_export',
 
     # Important: Place custom apps below Django apps
     'courses.apps.CoursesConfig',
