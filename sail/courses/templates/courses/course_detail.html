@@ -33,8 +33,14 @@
                     {% endfor %}
                 {% endif %}
             </div>
-            <p class="article-content">{{ course.description }}</p>
-            <small class="text-muted">Tags: {{ course.tags.all|join:", " }}</small>
+            <p class="article-content mt-2 mb-2">{{ course.description }}</p>
+            {% if course.prior_knowledge == '' %}
+                <small class="text-muted"><strong>Prior Knowledge:</strong> None</small>
+            {% else %}
+                <small class="text-muted"><strong>Prior Knowledge:</strong> {{ course.prior_knowledge }}</small>
+            {% endif %}
+            <br>
+            <small class="text-muted"><strong>Tags:</strong> {{ course.tags.all|join:", " }}</small>
         </div>
     </article>
     <div class="border-top pt-3">
