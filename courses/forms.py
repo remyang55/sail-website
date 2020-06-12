@@ -7,7 +7,11 @@ import datetime
 # This is so that the form could fill its initial values from the query parameters in the URL
 
 class TagForm(forms.Form):
-    all_tags = Tag.objects.all()
+    if Tag.DoesNotExist:
+        all_tags = []
+    else:
+        all_tags = Tag.objects.all()
+    
     tag_choices = list(zip(all_tags, all_tags))
 
     tags = forms.MultipleChoiceField(
