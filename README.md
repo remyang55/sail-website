@@ -12,4 +12,4 @@ First, make sure you have Python 3 (and pip) installed. Clone the repository and
 
 Running the site
 -----
-Before running the site, remember to activate your virtual environment first (as described above). Then, you can simply run `python manage.py runserver` and see the website at [https://localhost:8000](https://localhost:8000). To stop the server, press Ctrl + C. As you make changes, the Django server will reload automatically so you do not need to manually stop and start the server.
+Before running the site, remember to activate your virtual environment first (as described above). Then, to create an empty SQLite database that you can test on, run `python manage.py migrate`. To access [Django admin](https://localhost:8000/admin), you need to first create a superuser with `python manage.py createsuperuser`. After these steps, you can simply run `python manage.py runserver` and see the website at [https://localhost:8000](https://localhost:8000). To stop the server, press Ctrl + C. As you make changes, the Django server will reload automatically so you do not need to manually stop and start the server.
