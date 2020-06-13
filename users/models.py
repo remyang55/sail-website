@@ -55,6 +55,9 @@ class SailUser(AbstractUser):
     role = models.CharField(max_length=10, 
                             choices=ROLE_CHOICES, 
                             null=True)
+    
+    signed_participant_form = models.BooleanField(default=False)
+    signed_photo_form = models.BooleanField(default=False)
 
     objects = SailUserManager()
 
@@ -143,6 +146,9 @@ class Student(models.Model):
     dietary_restrictions = models.CharField(max_length=50, blank=True)
     home_state = models.CharField(max_length=2, blank=True)
     admitted_student = models.BooleanField(blank=True)
+
+    # FOR INTERNAL LOGISTICS
+    signed_medical_form = models.BooleanField(default=False)
     
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'

@@ -1,0 +1,103 @@
+{% extends "public/base.html" %}
+{% load static %}
+{% block content %}
+<img src="{% static 'users/illinois_logo.png' %}" alt="UIUC CS Logo" style="width:45%" class="center mb-5">
+<article class="media content-section mb-2">
+    <div class="media-body">
+        <div class="article-metadata mb-3">
+            <h2 class="mb-3">Participant Acknowledgement Form</h2>
+            <p>I, <strong>{{ user.first_name }} {{ user.last_name }}</strong>, understand
+                that I have a
+                right to expect
+                freedom from sexual, racial, or other forms of harassment or displays of prejudice. I also
+                understand
+                that this type of behavior or harassment is not acceptable of me as a Illinois Computer Science Sail
+                participant.
+                I realize that the guidelines listed below are not the only ones that may be enforced during the
+                Retreat.
+            </p>
+            <p>As a Illinois Computer Science Sail participant, I will be:</p>
+            <ul>
+                <li>a team member and share creativity and knowledge with others in the group.</li>
+                <li>inquisitive and informed if I have any concerns during the program.</li>
+                <li>respectful towards Illinois Computer Science Sail staff.</li>
+                <li>well-mannered; I will not behave in a way that will endanger myself or others.</li>
+                <li>helpful towards the Illinois Computer Science Sail staff by leaving group activities only in the
+                    company of a
+                    Illinois Computer Science Sail staff and by listening to their advice.
+                </li>
+                <li>proactive in looking after my own safety by notifying a Illinois Computer Science Sail staff member
+                    about my
+                    whereabouts at all times when I’m not with the group.
+                </li>
+            </ul>
+            <p>As a Illinois Computer Science Sail program participant, I agree to follow the above guidelines and rules
+                of the 2020 Illinois Computer Science Sail program. I am aware that if I choose not to follow these guidelines I
+                may risk dismissal from the program.
+            </p>
+
+            <p>Furthermore, I understand that I am participating in the Illinois Computer Science Sail program on
+                Saturday, April 4, 2020 with the assumption of risk at any academic or social event during the week. I will not
+                hold Illinois Computer Science Sail responsible for any accidents within my control.
+            </p>
+        </div>
+        {% if user.signed_participant_form %}
+            <form method="POST">
+                {% csrf_token %}
+                <p class="mb-1"><i>You already signed this form. Click below to unsign.</i></p>
+                <button class="btn btn-outline-primary mt-3" type="submit" name="unsubmit-participant-form">Unsign</button>
+            </form>
+        {% else %}
+            <form method="POST" autocomplete="off">
+                {% csrf_token %}
+                <strong><p>By typing my full name, <i>{{ user.first_name }} {{ user.last_name }}</i>, below, I acknowledge that I have fully read and agree to the terms above.</p></strong>
+                <input type="text" size="50" name="full-name">
+                <br>
+                <button class="btn btn-outline-primary mt-3" type="submit" name="submit-participant-form">Sign</button>
+            </form>
+        {% endif %}
+    </div>
+</article>
+
+
+<article class="media content-section mb-2">
+    <div class="media-body">
+        <div class="article-metadata mb-3">
+            <h2 class="mb-3">Photo Release Form</h2>
+            <p>Photographs and videotape may be taken during activities throughout the program and may be used to
+                update the Computer Science website at <a href="http://cs.illinois.edu" target="_blank">cs.illinois.edu</a>
+                or in future publications about the program. Any personal information you have provided will not be made public.
+            </p>
+            <p>I, <strong>{{ user.first_name }} {{ user.last_name }}</strong>, hereby give the University of
+                Illinois at Urbana-Champaign permission to use my photograph or likeness for publicity purposes.
+            </p>
+        </div>
+        {% if user.signed_photo_form %}
+            <form method="POST">
+                {% csrf_token %}
+                <p class="mb-1"><i>You already signed this form. Click below to unsign.</i></p>
+                <button class="btn btn-outline-primary mt-3" type="submit" name="unsubmit-photo-form">Unsign</button>
+            </form>
+        {% else %}
+            <form method="POST" autocomplete="off">
+                {% csrf_token %}
+                <strong><p>By typing my full name, <i>{{ user.first_name }} {{ user.last_name }}</i>, below, I acknowledge that I have fully read and agree to the terms above.</p></strong>
+                <input type="text" size="50" name="full-name">
+                <br>
+                <button class="btn btn-outline-primary mt-3" type="submit" name="submit-photo-form">Sign</button>
+            </form>
+        {% endif %}
+    </div>
+</article>
+
+{% if user.student %}
+    <article class="media content-section mb-2">
+        <div class="media-body">
+            <div class="article-metadata mb-3">
+                <h2 class="mb-3">Medical Form</h2>
+                <p>Please download the form <a href="{% url 'users_forms_medical' %}">here</a> and bring it with you when you check-in to Sail.</p>
+            </div>
+        </div>
+    </article>
+{% endif %}
+{% endblock content %}

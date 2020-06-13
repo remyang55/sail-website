@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.http import FileResponse, Http404
 
 """EMAIL IMPORTS"""
 from django.contrib.sites.shortcuts import get_current_site
@@ -18,6 +19,8 @@ from .forms import (SailUserCreationForm,
                     StudentCreationForm,
                     SailUserUpdateForm
 )
+
+import os
 
 def register(request):
     return render(request, 'users/register.html', {'title':'Register'})
@@ -121,3 +124,41 @@ def profile(request):
         form = SailUserUpdateForm(instance=request.user)
 
     return render(request, 'users/profile.html', {'form':form, 'title':'Profile'})
+
+@login_required
+def forms(request):
+    if request.method == 'POST':
+        if 'submit-participant-form' in request.POST:
+            if request.POST.get('full-name') == (f'{request.user.first_name} {request.user.last_name}'):
+                messages.success(request, 'Participant form successfully signed!')
+                request.user.signed_participant_form = True
+                request.user.save()
+            else:
+                messages.warning(request, 'Your name in the signature form must exactly match your name in your profile.')
+            return redirect('users_forms')
+        elif 'submit-photo-form' in request.POST:
+            if request.POST.get('full-name') == (f'{request.user.first_name} {request.user.last_name}'):
+                messages.success(request, 'Photo form successfully signed!')
+                request.user.signed_photo_form = True
+                request.user.save()
+            else:
+                messages.warning(request, 'Your name in the signature form must exactly match your name in your profile.')
+            return redirect('users_forms')
+        elif 'unsubmit-participant-form' in request.POST:
+            request.user.signed_participant_form = False
+            request.user.save()
+        elif 'unsubmit-photo-form' in request.POST:
+            request.user.signed_photo_form = False
+            request.user.save()
+
+    return render(request, 'users/forms.html')
+
+@login_required 
+def medical_form_pdf(request):
+    curr_dir = os.path.dirname(__file__)
+    file_path = os.path.join(curr_dir, './static/users/emergency_medical_form.pdf')
+
+    try:
+        return FileResponse(open(file_path, 'rb'), content_type='application/pdf')
+    except FileNotFoundError:
+        raise Http404()

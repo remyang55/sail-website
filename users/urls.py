@@ -7,4 +7,6 @@ urlpatterns = [
     path('register/students/', views.register_student, name='users_register_student'),
     path('activate/<uidb64>/<token>/', views.activate_account, name='users_activate'),
     path('profile/', views.profile, name='users_profile'),
+    path('forms/', views.forms, name='users_forms'),
+    path('forms/medical-form', views.medical_form_pdf, name='users_forms_medical'),
 ]

@@ -28,7 +28,13 @@
                 <button class="btn btn-outline-danger" type="submit" name="action" value="Delete" onclick="return confirm('Are you sure? This will permanently delete your account!')">Delete</button>
             </div>
         </form>
-
+        
+        <legend class="border-bottom">My Forms</legend>
+        <small class="text-muted">You will need to sign a medical, participant, and photo form.</small>
+        <div class="my-3">
+            <a class="btn btn-outline-primary" href="{% url 'users_forms' %}">Click here to sign</a>
+        </div>
+        
         {% if user.student %}
             <legend class="border-bottom">My Sail ID</legend>
             <small class="text-muted">Please display this QR Code to Sail Staff when checking in.</small>
