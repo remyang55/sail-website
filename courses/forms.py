@@ -7,17 +7,17 @@ import datetime
 # This is so that the form could fill its initial values from the query parameters in the URL
 
 class TagForm(forms.Form):
-    if Tag.DoesNotExist:
-        all_tags = []
-    else:
+    # Database queries in forms cannot be done at import time, or initial migrations will fail!
+    # Solution is to move queries into __init__()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         all_tags = Tag.objects.all()
-    
-    tag_choices = list(zip(all_tags, all_tags))
+        self.fields['tags'].choices = list(zip(all_tags, all_tags))
 
     tags = forms.MultipleChoiceField(
         required=False,
         widget=forms.CheckboxSelectMultiple(attrs={'onchange':'form.submit();'}),
-        choices=tag_choices,
+        choices=[('' , '')],
         label=False
     )
 
