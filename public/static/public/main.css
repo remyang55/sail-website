@@ -21,7 +21,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .site-header .navbar-nav .nav-link:hover {
-    color: #ffffff;
+    color: white;
 }
 
 .site-header .navbar-nav .nav-link.active {
@@ -87,4 +87,14 @@ h1, h2, h3, h4, h5, h6 {
     width: 25px;
     height: 25px;
     vertical-align: middle;
+}
+
+.footer {
+    color: #cbd5db;
+    padding: 20px;
+    margin-top: 150px;
+}
+
+.contact-us-link {
+    color: #E35531;
 }
