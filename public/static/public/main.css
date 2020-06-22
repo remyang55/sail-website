@@ -1,3 +1,7 @@
+html, body {
+    height: 100%;
+}
+
 body {
     background: #fafafa;
     color: #333333;
@@ -6,6 +10,10 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
     color: #444444;
+}
+
+main {
+    flex: 1 0 auto;
 }
 
 .about-body {
@@ -92,7 +100,8 @@ h1, h2, h3, h4, h5, h6 {
 .footer {
     color: #cbd5db;
     padding: 20px;
-    margin-top: 150px;
+    margin-top: 5%;
+    flex-shrink: none;
 }
 
 .contact-us-link {
