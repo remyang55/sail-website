@@ -7,10 +7,12 @@ class Email(models.Model):
     TEACHER = 'Teacher'
     STUDENT = 'Student'
     USER = 'User'
+    FOLLOWER = 'Follower'
     SENDTO_CHOICES = (
         (TEACHER, 'All Teachers'),
         (STUDENT, 'All Students'),
         (USER, 'All Users (Teachers and Students)'),
+        (FOLLOWER, 'Followers (Interested people)'),
     )
     send_to = models.CharField(max_length=10, 
                                choices=SENDTO_CHOICES, 

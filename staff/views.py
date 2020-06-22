@@ -1,3 +1,4 @@
+from django.apps import apps
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
@@ -29,6 +30,8 @@ def send_email(request):
                 to_emails = get_user_model().objects.filter(is_active=True).filter(role=Email.STUDENT).values_list('email', flat=True)
             elif send_to == Email.USER:
                 to_emails = get_user_model().objects.filter(is_active=True).values_list('email', flat=True)
+            elif send_to == Email.FOLLOWER:
+                to_emails = apps.get_model('users', 'Follower').objects.filter(is_confirmed=True).values_list('email', flat=True)
 
             connection = mail.get_connection()
             connection.open()

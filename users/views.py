@@ -13,11 +13,12 @@ from django.core.mail import EmailMessage
 from .token_generator import account_activation_token
 """EMAIL IMPORTS"""
 
-from .models import Teacher, Student
+from .models import Teacher, Student, Follower
 from .forms import (SailUserCreationForm, 
                     TeacherCreationForm,
                     StudentCreationForm,
-                    SailUserUpdateForm
+                    SailUserUpdateForm,
+                    FollowerCreationForm
 )
 
 import os
@@ -106,6 +107,19 @@ def register_student(request):
     context = {'u_form':u_form, 'p_form':p_form, 'title':'Student Register'}
 
     return render(request, 'users/register_form.html', context)
+
+def interest_form(request):
+    if request.method == 'POST':
+        form = FollowerCreationForm(request.POST)
+        if form.is_valid():
+            follower = form.save()
+
+            messages.success(request, 'Your email has been added to our interest list!')
+            return redirect('sail_home')
+    else:
+        form = FollowerCreationForm()
+    
+    return render(request, 'users/interest_form.html', {'form':form, 'title':'Interest Form'})
 
 @login_required
 def profile(request):

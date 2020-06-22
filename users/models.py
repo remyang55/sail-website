@@ -152,3 +152,13 @@ class Student(models.Model):
     
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'
+
+"""
+This model describes someone who is "interested" (i.e. we will email them with notifications)
+"""
+class Follower(models.Model):
+    email = models.EmailField()
+    is_confirmed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.email

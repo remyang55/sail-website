@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import SailUser, Teacher, Student
+from .models import SailUser, Teacher, Student, Follower
 
 class SailUserCreationForm(UserCreationForm):
     first_name = forms.CharField()
@@ -38,3 +38,10 @@ class SailUserUpdateForm(forms.ModelForm):
     class Meta:
         model = SailUser
         fields = ['email', 'first_name', 'last_name']
+
+class FollowerCreationForm(forms.ModelForm):
+
+    class Meta:
+        model = Follower
+        fields = ['email']
+        help_texts = {'email':"Your email will be added to our interest list, and we will send you any updates related to Sail!"}

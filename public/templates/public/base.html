@@ -42,6 +42,7 @@
                     <div class="navbar-nav">
                         {% if user.is_authenticated %}
                             {% if user.is_staff %}
+                                <a class="nav-item nav-link" href="{% url 'admin:index' %}">Admin</a>
                                 <a class="nav-item nav-link" href="{% url 'staff_actions' %}">Staff Actions</a>
                             {% endif %}
                             {% if user.teacher %}
