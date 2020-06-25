@@ -1,9 +1,9 @@
 {% extends "public/base.html" %}
 {% load static %}
 {% block content %}
-<img src="{% static 'users/illinois_logo.png' %}" alt="UIUC CS Logo" style="width:45%" class="center mb-5">
+<img src="{% static 'users/illinois_logo.png' %}" alt="UIUC CS Logo" class="center mb-5 w-100">
 <article class="media content-section mb-2">
-    <div class="media-body">
+    <div class="media-body container pl-0">
         <div class="article-metadata mb-3">
             <h2 class="mb-3">Participant Acknowledgement Form</h2>
             <p>I, <strong>{{ user.first_name }} {{ user.last_name }}</strong>, understand
@@ -51,7 +51,7 @@
             <form method="POST" autocomplete="off">
                 {% csrf_token %}
                 <strong><p>By typing my full name, <i>{{ user.first_name }} {{ user.last_name }}</i>, below, I acknowledge that I have fully read and agree to the terms above.</p></strong>
-                <input type="text" size="50" name="full-name">
+                <input type="text" name="full-name" class="w-100">
                 <br>
                 <button class="btn btn-outline-primary mt-3" type="submit" name="submit-participant-form">Sign</button>
             </form>
@@ -61,7 +61,7 @@
 
 
 <article class="media content-section mb-2">
-    <div class="media-body">
+    <div class="media-body container pl-0">
         <div class="article-metadata mb-3">
             <h2 class="mb-3">Photo Release Form</h2>
             <p>Photographs and videotape may be taken during activities throughout the program and may be used to
@@ -82,7 +82,7 @@
             <form method="POST" autocomplete="off">
                 {% csrf_token %}
                 <strong><p>By typing my full name, <i>{{ user.first_name }} {{ user.last_name }}</i>, below, I acknowledge that I have fully read and agree to the terms above.</p></strong>
-                <input type="text" size="50" name="full-name">
+                <input type="text" name="full-name" class="w-100">
                 <br>
                 <button class="btn btn-outline-primary mt-3" type="submit" name="submit-photo-form">Sign</button>
             </form>
@@ -93,11 +93,13 @@
 {% if user.student %}
     <article class="media content-section mb-2">
         <div class="media-body">
-            <div class="article-metadata mb-3">
+            <div class="mb-3">
                 <h2 class="mb-3">Medical Form</h2>
                 <p>Please download the form <a href="{% url 'users_forms_medical' %}">here</a> and bring it with you when you check-in to Sail.</p>
             </div>
         </div>
     </article>
 {% endif %}
+
+<br>
 {% endblock content %}

@@ -10,7 +10,7 @@
 
 {% block content %}
     <div class="text-center">
-        <img src="{% static 'public/sail_logo.png' %}" alt="Sail Logo" style="width:50%">
+        <img src="{% static 'public/sail_logo.png' %}" alt="Sail Logo" style="width:60%">
         <br>
         <p class="w-75 mt-2 mx-auto" style="color:white">
             Welcome to Illinois Computer Science Sail!
@@ -18,6 +18,6 @@
             high schoolers have the chance to experience what it is like to be a computer science student
             at the University of Illinois at Urbana-Champaign.
         </p>
-        <a class="btn btn-light mt-3" href="{% url 'users_interest_form' %}">Fill out Interest Form</a>
+        <a class="btn btn-light mt-1" href="{% url 'users_interest_form' %}">Fill out Interest Form</a>
     </div>
 {% endblock content %}

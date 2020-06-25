@@ -31,7 +31,7 @@ def _send_register_confirmation_email(request, user, to_email):
     email_subject = 'Activate your Sail Account'
     current_site = get_current_site(request)
 
-    message = render_to_string('users/register_activate.html', {
+    message = render_to_string('users/register_activate_email.html', {
         'user': user,
         'domain': current_site.domain,
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
