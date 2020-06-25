@@ -158,7 +158,18 @@ This model describes someone who is "interested" (i.e. we will email them with n
 """
 class Follower(models.Model):
     email = models.EmailField()
-    is_confirmed = models.BooleanField(default=False)
+
+    TEACHER = 'Teacher'
+    STUDENT = 'Student'
+    PARENT = 'Parent'
+    ROLE_CHOICES = (
+        (TEACHER, 'Prospective Teacher'),
+        (STUDENT, 'Prospective Student'),
+        (PARENT, 'Parent / Interested Person'),
+    )
+    role = models.CharField(max_length=10,
+                            choices=ROLE_CHOICES,
+                            default=TEACHER)
 
     def __str__(self):
         return self.email

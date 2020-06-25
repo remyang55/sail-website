@@ -45,7 +45,7 @@ def activate_account(request, uidb64, token):
     try:
         uid = force_bytes(urlsafe_base64_decode(uidb64))
         user = get_user_model().objects.get(pk=uid)
-    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+    except(TypeError, ValueError, OverflowError, get_user_model().DoesNotExist):
         user = None
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
@@ -112,9 +112,8 @@ def interest_form(request):
     if request.method == 'POST':
         form = FollowerCreationForm(request.POST)
         if form.is_valid():
-            follower = form.save()
-
-            messages.success(request, 'Your email has been added to our interest list!')
+            form.save()
+            messages.success(request, 'Thank you for your interest in Sail; we will email you updates on the event!')
             return redirect('sail_home')
     else:
         form = FollowerCreationForm()
@@ -127,7 +126,7 @@ def profile(request):
         if request.POST['action'] == 'Update':
             form = SailUserUpdateForm(request.POST, instance=request.user)
             if form.is_valid():
-                user = form.save()
+                form.save()
                 messages.success(request, 'Account updated!')
                 return redirect('users_profile')
         elif request.POST['action'] == 'Delete':

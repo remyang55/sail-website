@@ -43,5 +43,6 @@ class FollowerCreationForm(forms.ModelForm):
 
     class Meta:
         model = Follower
-        fields = ['email']
+        fields = ['email', 'role']
         help_texts = {'email':"Your email will be added to our interest list, and we will send you any updates related to Sail!"}
+        labels = {'role':"I am a"}
