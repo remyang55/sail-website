@@ -71,7 +71,9 @@
             {% endfor %}
         {% endif %}
         
-        {% block content %}{% endblock content %}
+        <div class="container">
+            {% block content %}{% endblock content %}
+        </div>
     </main>
     {% if display_footer %}
         <footer class="footer bg-sail-color">

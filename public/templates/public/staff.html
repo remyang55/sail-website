@@ -1,6 +1,14 @@
 {% extends "public/base.html" %}
 {% load static %}
 {% block content %}
-    <h1 style="width:45%; text-align: center; margin-bottom:1rem;" class="center">Sail Staff Welcomes You!</h1>
-    <img src="{% static 'public/staff_group_photo.png' %}" alt="Sail Staff Group Photo" style="width:45%" class="center">
+    <div class="text-center">
+        {% if request.user_agent.is_mobile %}
+            <h2>2019-2020 Sail Staff</h2>
+            <img src="{% static 'public/staff_group_photo.png' %}" alt="Sail Staff Group Photo" class="w-100">
+        {% else %}
+            <h1>2019-2020 Sail Staff</h1>
+            <img src="{% static 'public/staff_group_photo.png' %}" alt="Sail Staff Group Photo" class="w-50">
+        {% endif %}
+        <p class="mt-4">We will post bios of new staff members here soon!</p>
+    </div>
 {% endblock content %}

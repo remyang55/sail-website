@@ -9,12 +9,15 @@
 {% endblock head %}
 
 {% block content %}
-    <img src="{% static 'public/sail_logo.png' %}" alt="Sail Logo" style="width:40%" class="center">
-    <p style="color:white" class="center">
-        Welcome to Illinois Computer Science Sail!
-        We are an entirely student-run organization that hosts an annual one-day event where
-        high schoolers have the chance to experience what it is like to be a computer science student
-        at the University of Illinois at Urbana-Champaign.
-    </p>
-    <a class="btn btn-light center mt-5" style="width:15%" href="{% url 'users_interest_form' %}">Fill out Interest Form</a>
+    <div class="text-center">
+        <img src="{% static 'public/sail_logo.png' %}" alt="Sail Logo" style="width:50%">
+        <br>
+        <p class="w-75 mt-2 mx-auto" style="color:white">
+            Welcome to Illinois Computer Science Sail!
+            We are an entirely student-run organization that hosts an annual one-day event where
+            high schoolers have the chance to experience what it is like to be a computer science student
+            at the University of Illinois at Urbana-Champaign.
+        </p>
+        <a class="btn btn-light mt-3" href="{% url 'users_interest_form' %}">Fill out Interest Form</a>
+    </div>
 {% endblock content %}

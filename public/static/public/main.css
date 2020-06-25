@@ -36,12 +36,6 @@ main {
     font-weight: 500;
 }
 
-.center {
-    display: block;
-    margin: 0 auto;
-    width: 50%;
-}
-
 .content-section {
     background: #ffffff;
     padding: 10px 20px;
