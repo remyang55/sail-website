@@ -3,8 +3,13 @@
     <article class="media content-section">
         <div class="media-body">
             <div class="article-metadata">
-                <h2 class="article-title" style="display:inline">{{ course.course_name }}</h2>
-                <span class="ml-1 float-right">by {{ course.teacher }}</span>
+                {% if request.user_agent.is_mobile %}
+                    <h2 class="article-title">{{ course.course_name }}</h2>
+                    <span class="ml-1">by {{ course.teacher }}</span>
+                {% else %}
+                    <h2 class="article-title" style="display:inline">{{ course.course_name }}</h2>
+                    <span class="ml-1 float-right">by {{ course.teacher }}</span>
+                {% endif %}
                 {% if course.teacher == user.teacher %}
                     <div>
                         <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'courses_update' course.id %}">Update</a>
