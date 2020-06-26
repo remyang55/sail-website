@@ -9,8 +9,12 @@
 {% endblock head %}
 
 {% block content %}
-    <div class="text-center">
-        <img src="{% static 'public/sail_logo.png' %}" alt="Sail Logo" style="width:60%">
+    <div class="text-center mb-5">
+        {% if request.user_agent.is_mobile %}
+            <img src="{% static 'public/sail_logo.png' %}" alt="Sail Logo" class="w-75">
+        {% else %}
+            <img src="{% static 'public/sail_logo.png' %}" alt="Sail Logo" style="width:60%">
+        {% endif %}
         <br>
         <p class="w-75 mt-2 mx-auto" style="color:white">
             Welcome to Illinois Computer Science Sail!
