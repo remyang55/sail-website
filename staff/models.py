@@ -1,13 +1,12 @@
 from django.db import models
 
-class Email(models.Model):
+class StaffEmail(models.Model):
     subject = models.CharField(max_length=100)
     content = models.TextField()
 
     TEACHER = 'Teacher'
     STUDENT = 'Student'
     USER = 'User'
-
     P_TEACHER = 'Prospective Teacher'
     P_STUDENT = 'Prospective Student'
     PARENT = 'Parent'

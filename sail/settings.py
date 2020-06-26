@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'import_export',
     'django_user_agents',
 
-    # Important: Place custom apps below Django apps
+    # IMPORTANT: Place custom apps (the ones in our project) below Django apps
     'courses.apps.CoursesConfig',
     'users.apps.UsersConfig',
     'public.apps.PublicConfig',
@@ -149,14 +149,14 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'public/static/'),
 ]
 
-# Custom settings
+# Custom settings 
 
-AUTH_USER_MODEL = 'users.SailUser'
+AUTH_USER_MODEL = 'users.SailUser'   # tells Django to use our custom SailUser as default user model
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'  # tells 'crispy_forms' to use bootstrap4
 
-LOGIN_REDIRECT_URL = 'sail-home'
-LOGIN_URL = 'users-login'
+LOGIN_REDIRECT_URL = 'sail-home'     # where to redirect already-logged-in users if they go to the login page
+LOGIN_URL = 'users-login'            # name of url where users login (defined in sail/urls.py)
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
