@@ -4,27 +4,23 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import FileResponse, Http404
 
-"""EMAIL IMPORTS"""
+""" STUFF USED FOR SENDING ACTIVATION EMAIL """
 from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.template.loader import render_to_string
-from django.core.mail import EmailMessage
 from .token_generator import account_activation_token
-"""EMAIL IMPORTS"""
 
 from .models import Teacher, Student, Follower
-from .forms import (SailUserCreationForm, 
+from .forms import (SailUserCreationForm,
+                    SailUserUpdateForm,
                     TeacherCreationForm,
                     StudentCreationForm,
-                    SailUserUpdateForm,
-                    FollowerCreationForm
+                    FollowerCreationForm,
 )
 
 import os
-
-def register(request):
-    return render(request, 'users/register.html', {'title':'Register'})
 
 # Credits to https://blog.hlab.tech/part-ii-how-to-sign-up-user-and-send-confirmation-email-in-django-2-1-and-python-3-6/
 def _send_register_confirmation_email(request, user, to_email):
@@ -56,13 +52,17 @@ def activate_account(request, uidb64, token):
         messages.error(request, 'The activation link seems to be invalid!')
         return redirect('sail-home')
 
+""" Menu to select whether to sign up as teacher or student """
+def register(request):
+    return render(request, 'users/register.html', {'title':'Register'})
+
 def register_teacher(request):
     if request.method == 'POST':
         u_form = SailUserCreationForm(request.POST)
         p_form = TeacherCreationForm(request.POST)
         if u_form.is_valid() and p_form.is_valid():
             user = u_form.save(commit=False)
-            user.is_active = False
+            user.is_active = False  # user is added to our database, but would not be able to login until they activate their account
             user.role = get_user_model().TEACHER
             user.save()
 
@@ -79,7 +79,6 @@ def register_teacher(request):
         p_form = TeacherCreationForm()
     
     context = {'u_form':u_form, 'p_form':p_form, 'title':'Teacher Register'}
-
     return render(request, 'users/register_form.html', context)
 
 def register_student(request):
@@ -88,7 +87,7 @@ def register_student(request):
         p_form = StudentCreationForm(request.POST)
         if u_form.is_valid() and p_form.is_valid():
             user = u_form.save(commit=False)
-            user.is_active = False
+            user.is_active = False  # user is added to our database, but would not be able to login until they activate their account
             user.role = get_user_model().STUDENT
             user.save()
 
@@ -105,10 +104,9 @@ def register_student(request):
         p_form = StudentCreationForm()
     
     context = {'u_form':u_form, 'p_form':p_form, 'title':'Student Register'}
-
     return render(request, 'users/register_form.html', context)
 
-def interest_form(request):
+def register_follower(request):
     if request.method == 'POST':
         form = FollowerCreationForm(request.POST)
         if form.is_valid():
@@ -120,6 +118,7 @@ def interest_form(request):
     
     return render(request, 'users/interest_form.html', {'form':form, 'title':'Interest Form'})
 
+""" Displays a user's profile, and allows them to update or delete their account """
 @login_required
 def profile(request):
     if request.method == 'POST':
@@ -138,6 +137,7 @@ def profile(request):
 
     return render(request, 'users/profile.html', {'form':form, 'title':'Profile'})
 
+""" Displays and allows participants to e-sign forms/waivers """
 @login_required
 def forms(request):
     if request.method == 'POST':

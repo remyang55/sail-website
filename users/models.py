@@ -62,7 +62,7 @@ class SailUser(AbstractUser):
     objects = SailUserManager()
 
     def __str__(self):
-        return f'{self.email} User'
+        return f'{self.user.first_name} {self.user.last_name}'
 
 class Teacher(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
@@ -148,14 +148,12 @@ class Student(models.Model):
     admitted_student = models.BooleanField(blank=True)
 
     # FOR INTERNAL LOGISTICS
-    signed_medical_form = models.BooleanField(default=False)
+    signed_medical_form = models.BooleanField(blank=True)
     
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'
 
-"""
-This model describes someone who is "interested" (i.e. we will email them with notifications)
-"""
+""" This model describes someone who is "interested" (i.e. we will email them with event updates) """
 class Follower(models.Model):
     email = models.EmailField()
 

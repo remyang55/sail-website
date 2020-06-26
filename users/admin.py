@@ -5,10 +5,9 @@ from .models import SailUser, Teacher, Student, Follower
 
 # Credits to https://www.fomfus.com/articles/how-to-use-email-as-username-for-django-authentication-removing-the-username
 
+""" Define admin model for custom User model with no username field """
 @admin.register(SailUser)
 class SailUserAdmin(DjangoUserAdmin):
-    """Define admin model for custom User model with no email field."""
-
     fieldsets = (
         (None, {'fields': ('email', 'password', 'role', 'signed_participant_form', 'signed_photo_form')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name')}),
