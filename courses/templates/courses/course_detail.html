@@ -4,10 +4,10 @@
         <div class="media-body">
             <div class="article-metadata">
                 {% if request.user_agent.is_mobile %}
-                    <h2 class="article-title">{{ course.course_name }}</h2>
+                    <h4 class="article-title">{{ course.course_name }}</h4>
                     <span class="ml-1">by {{ course.teacher }}</span>
                 {% else %}
-                    <h2 class="article-title" style="display:inline">{{ course.course_name }}</h2>
+                    <h3 class="article-title" style="display:inline">{{ course.course_name }}</h3>
                     <span class="ml-1 float-right">by {{ course.teacher }}</span>
                 {% endif %}
                 {% if course.teacher == user.teacher %}
