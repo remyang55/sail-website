@@ -30,8 +30,14 @@ def send_email(request):
                 to_emails = get_user_model().objects.filter(is_active=True).filter(role=Email.STUDENT).values_list('email', flat=True)
             elif send_to == Email.USER:
                 to_emails = get_user_model().objects.filter(is_active=True).values_list('email', flat=True)
+            elif send_to == Email.P_STUDENT:
+                to_emails = apps.get_model('users', 'Follower').objects.filter(role=Email.P_STUDENT).values_list('email', flat=True)
+            elif send_to == Email.P_TEACHER:
+                to_emails = apps.get_model('users', 'Follower').objects.filter(role=Email.P_TEACHER).values_list('email', flat=True)
+            elif send_to == Email.PARENT:
+                to_emails = apps.get_model('users', 'Follower').objects.filter(role=Email.PARENT).values_list('email', flat=True)
             elif send_to == Email.FOLLOWER:
-                to_emails = apps.get_model('users', 'Follower').objects.filter(is_confirmed=True).values_list('email', flat=True)
+                to_emails = apps.get_model('users', 'Follower').objects.all().values_list('email', flat=True)
 
             connection = mail.get_connection()
             connection.open()

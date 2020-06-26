@@ -7,13 +7,21 @@ class Email(models.Model):
     TEACHER = 'Teacher'
     STUDENT = 'Student'
     USER = 'User'
+
+    P_TEACHER = 'Prospective Teacher'
+    P_STUDENT = 'Prospective Student'
+    PARENT = 'Parent'
     FOLLOWER = 'Follower'
+
     SENDTO_CHOICES = (
         (TEACHER, 'All Teachers'),
         (STUDENT, 'All Students'),
         (USER, 'All Users (Teachers and Students)'),
-        (FOLLOWER, 'Followers (Interested people)'),
+        (P_TEACHER, 'Prospective Teachers'),
+        (P_STUDENT, 'Prospective Students'),
+        (PARENT, 'Parent / Interested Person'),
+        (FOLLOWER, 'Everyone on interest list'),
     )
-    send_to = models.CharField(max_length=10, 
+    send_to = models.CharField(max_length=20, 
                                choices=SENDTO_CHOICES, 
                                null=True)

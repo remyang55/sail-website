@@ -159,17 +159,17 @@ This model describes someone who is "interested" (i.e. we will email them with n
 class Follower(models.Model):
     email = models.EmailField()
 
-    TEACHER = 'Teacher'
-    STUDENT = 'Student'
+    P_TEACHER = 'Prospective Teacher'
+    P_STUDENT = 'Prospective Student'
     PARENT = 'Parent'
     ROLE_CHOICES = (
-        (TEACHER, 'Prospective Teacher'),
-        (STUDENT, 'Prospective Student'),
+        (P_TEACHER, 'Prospective Teacher'),
+        (P_STUDENT, 'Prospective Student'),
         (PARENT, 'Parent / Interested Person'),
     )
-    role = models.CharField(max_length=10,
+    role = models.CharField(max_length=20,
                             choices=ROLE_CHOICES,
-                            default=TEACHER)
+                            default=P_TEACHER)
 
     def __str__(self):
         return self.email
