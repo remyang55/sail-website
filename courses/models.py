@@ -29,7 +29,7 @@ class Course(models.Model):
         return self.course_name
     
     def get_absolute_url(self):
-        return reverse('courses_detail', kwargs={'pk':self.pk})
+        return reverse('courses-detail', kwargs={'pk':self.pk})
 
 class Room(models.Model):
     room_name = models.CharField(max_length=20)

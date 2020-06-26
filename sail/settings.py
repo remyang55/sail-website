@@ -155,8 +155,8 @@ AUTH_USER_MODEL = 'users.SailUser'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'sail_home'
-LOGIN_URL = 'users_login'
+LOGIN_REDIRECT_URL = 'sail-home'
+LOGIN_URL = 'users-login'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

@@ -8,11 +8,11 @@ from django.core import mail
 from .forms import SendEmailForm
 from .models import Email
 
-@staff_member_required(login_url='users_login')
+@staff_member_required(login_url='users-login')
 def staff_actions(request):
     return render(request, 'staff/staff_actions.html')
 
-@staff_member_required(login_url='users_login')
+@staff_member_required(login_url='users-login')
 def send_email(request):
     if request.method == 'POST':
         form = SendEmailForm(request.POST)
@@ -50,7 +50,7 @@ def send_email(request):
             connection.close()
 
             messages.success(request, 'Email successfully sent!')
-            return redirect('staff_actions')
+            return redirect('staff-actions')
     else:
         form = SendEmailForm()
     

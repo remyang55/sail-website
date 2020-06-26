@@ -69,12 +69,12 @@ class CourseListView(ListView):
                     if (s.students.all().count() >= s.room.max_capacity
                         or (s.course.capacity_limit is not None and s.students.all().count() >= s.course.capacity_limit)):
                         messages.warning(request, 'Cannot Register: Section is full')
-                        return redirect('courses_list')
+                        return redirect('courses-list')
 
                     for rs in self.request.user.student.section_set.all():
                         if s.course == rs.course:
                             messages.warning(request, 'Cannot Register: Already registered for another section of the same course')
-                            return redirect('courses_list')
+                            return redirect('courses-list')
                         
                         if ((s.start_time == rs.start_time)
                             or (s.start_time < rs.start_time
@@ -82,12 +82,12 @@ class CourseListView(ListView):
                             or (s.start_time > rs.start_time
                                 and rs.start_time + rs.course.course_duration > s.start_time)):
                             messages.warning(request, 'Cannot Register: Time Conflict')
-                            return redirect('courses_list')
+                            return redirect('courses-list')
 
                     self.request.user.student.section_set.add(section_id)
                 elif action == 'Unregister':
                     self.request.user.student.section_set.remove(section_id)
-        return redirect('courses_list')
+        return redirect('courses-list')
 
 class CourseDetailView(DetailView):
     model = Course
@@ -109,12 +109,12 @@ class CourseDetailView(DetailView):
                     if ((s.students.all().count() >= s.room.max_capacity)
                         or (s.course.capacity_limit is not None and s.students.all().count() >= s.course.capacity_limit)):
                         messages.warning(request, 'Cannot Register: Section is full')
-                        return redirect('courses_list')
+                        return redirect('courses-list')
 
                     for rs in self.request.user.student.section_set.all():
                         if s.course == rs.course:
                             messages.warning(request, 'Cannot Register: Already registered for another section of the same course')
-                            return redirect('courses_list')
+                            return redirect('courses-list')
                         
                         if ((s.start_time == rs.start_time)
                             or (s.start_time < rs.start_time
@@ -122,12 +122,12 @@ class CourseDetailView(DetailView):
                             or (s.start_time > rs.start_time
                                 and rs.start_time + rs.course.course_duration > s.start_time)):
                             messages.warning(request, 'Cannot Register: Time Conflict')
-                            return redirect('courses_list')
+                            return redirect('courses-list')
 
                     self.request.user.student.section_set.add(section_id)
                 elif action == 'Unregister':
                     self.request.user.student.section_set.remove(section_id)
-        return redirect('courses_list')
+        return redirect('courses-list')
 
 class CourseCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Course

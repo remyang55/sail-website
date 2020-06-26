@@ -2,7 +2,7 @@
 {% block content %}
     <legend class="border-bottom">My Courses</legend>
     {% if user.student.section_set.count == 0 %}
-        <small class="text-muted">Click <a href="{% url 'courses_list' %}">here</a> to start signing up for courses. Your courses will show up here after you sign up for them.</small>
+        <small class="text-muted">Click <a href="{% url 'courses-list' %}">here</a> to start signing up for courses. Your courses will show up here after you sign up for them.</small>
     {% else %}
         <small class="text-muted">Click on a course to view it.</small>
     {% endif %}
@@ -10,7 +10,7 @@
         {% for section in sections %}
             <div class="mb-3">
                 <h4>{{ section.start_time|date:"H:i" }} at {{ section.room }}</h4>
-                <a class="btn btn-outline-info" style="white-space:normal; text-align:left" href="{% url 'courses_detail' section.course.id %}">{{ section.course }}</a>
+                <a class="btn btn-outline-info" style="white-space:normal; text-align:left" href="{% url 'courses-detail' section.course.id %}">{{ section.course }}</a>
             </div>
         {% endfor %}
     </div>

@@ -12,8 +12,8 @@
                 {% endif %}
                 {% if course.teacher == user.teacher %}
                     <div>
-                        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'courses_update' course.id %}">Update</a>
-                        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'courses_delete' course.id %}">Delete</a>
+                        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'courses-update' course.id %}">Update</a>
+                        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'courses-delete' course.id %}">Delete</a>
                     </div> 
                 {% endif %}
                 {% if user.student %}
@@ -50,7 +50,7 @@
     </article>
     <div class="border-top pt-3">
         <small class="text-muted">
-            <a href="{% url 'courses_list' %}">Back to Courses</a>
+            <a href="{% url 'courses-list' %}">Back to Courses</a>
         </small>
     </div>
 {% endblock content %}

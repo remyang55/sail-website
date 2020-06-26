@@ -26,16 +26,16 @@
     <header class="site-header">
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-sail-color">
             <div class="container">
-                <a class="navbar-brand mr-4" href="{% url 'sail_home' %}">Illinois CS Sail</a>
+                <a class="navbar-brand mr-4" href="{% url 'sail-home' %}">Illinois CS Sail</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarToggle">
                     <div class="navbar-nav mr-auto">
-                        <a class="nav-item nav-link" href="{% url 'sail_home' %}">Home</a>
-                        <a class="nav-item nav-link" href="{% url 'sail_about' %}">About</a>
-                        <a class="nav-item nav-link" href="{% url 'sail_staff' %}">Staff</a>
-                        <a class="nav-item nav-link" href="{% url 'courses_list' %}">Courses</a>
+                        <a class="nav-item nav-link" href="{% url 'sail-home' %}">Home</a>
+                        <a class="nav-item nav-link" href="{% url 'sail-about' %}">About</a>
+                        <a class="nav-item nav-link" href="{% url 'sail-staff' %}">Staff</a>
+                        <a class="nav-item nav-link" href="{% url 'courses-list' %}">Courses</a>
                     </div>
 
                     <!-- Navbar Right Side -->
@@ -43,18 +43,18 @@
                         {% if user.is_authenticated %}
                             {% if user.is_staff %}
                                 <a class="nav-item nav-link" href="{% url 'admin:index' %}">Admin</a>
-                                <a class="nav-item nav-link" href="{% url 'staff_actions' %}">Staff Actions</a>
+                                <a class="nav-item nav-link" href="{% url 'staff-actions' %}">Staff Actions</a>
                             {% endif %}
                             {% if user.teacher %}
-                                <a class="nav-item nav-link" href="{% url 'courses_create' %}">Create Course</a>
+                                <a class="nav-item nav-link" href="{% url 'courses-create' %}">Create Course</a>
                             {% elif user.student %}
-                                <a class="nav-item nav-link" href="{% url 'student_courses' %}">My Courses</a>
+                                <a class="nav-item nav-link" href="{% url 'student-courses' %}">My Courses</a>
                             {% endif %}
-                            <a class="nav-item nav-link" href="{% url 'users_profile' %}">Profile</a>
-                            <a class="nav-item nav-link" href="{% url 'users_logout' %}">Logout</a>
+                            <a class="nav-item nav-link" href="{% url 'users-profile' %}">Profile</a>
+                            <a class="nav-item nav-link" href="{% url 'users-logout' %}">Logout</a>
                         {% else %}
-                            <a class="nav-item nav-link" href="{% url 'users_login' %}">Login</a>
-                            <a class="nav-item nav-link" href="{% url 'users_register' %}">Register</a>
+                            <a class="nav-item nav-link" href="{% url 'users-login' %}">Login</a>
+                            <a class="nav-item nav-link" href="{% url 'users-register' %}">Register</a>
                         {% endif %}
                     </div>
                 </div>

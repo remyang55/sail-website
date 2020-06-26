@@ -51,10 +51,10 @@ def activate_account(request, uidb64, token):
         user.is_active = True
         user.save()
         messages.success(request, 'Your account has been activated successfully. You may login now!')
-        return redirect('users_login')
+        return redirect('users-login')
     else:
         messages.error(request, 'The activation link seems to be invalid!')
-        return redirect('sail_home')
+        return redirect('sail-home')
 
 def register_teacher(request):
     if request.method == 'POST':
@@ -73,7 +73,7 @@ def register_teacher(request):
             _send_register_confirmation_email(request, user, u_form.cleaned_data['email'])
 
             messages.success(request, 'Account created! You will need to verify your account in your email before you can login.')
-            return redirect('users_login')
+            return redirect('users-login')
     else:
         u_form = SailUserCreationForm()
         p_form = TeacherCreationForm()
@@ -99,7 +99,7 @@ def register_student(request):
             _send_register_confirmation_email(request, user, u_form.cleaned_data['email'])
 
             messages.success(request, 'Account created! You will need to verify your account in your email before you can login.')
-            return redirect('users_login')
+            return redirect('users-login')
     else:
         u_form = SailUserCreationForm()
         p_form = StudentCreationForm()
@@ -114,7 +114,7 @@ def interest_form(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Thank you for your interest in Sail; we will email you updates on the event!')
-            return redirect('sail_home')
+            return redirect('sail-home')
     else:
         form = FollowerCreationForm()
     
@@ -128,11 +128,11 @@ def profile(request):
             if form.is_valid():
                 form.save()
                 messages.success(request, 'Account updated!')
-                return redirect('users_profile')
+                return redirect('users-profile')
         elif request.POST['action'] == 'Delete':
             request.user.delete()
             messages.success(request, 'Account deleted')
-            return redirect('sail_home')
+            return redirect('sail-home')
     else:
         form = SailUserUpdateForm(instance=request.user)
 
@@ -148,7 +148,7 @@ def forms(request):
                 request.user.save()
             else:
                 messages.warning(request, 'Your name in the signature form must exactly match your name in your profile.')
-            return redirect('users_forms')
+            return redirect('users-forms')
         elif 'submit-photo-form' in request.POST:
             if request.POST.get('full-name') == (f'{request.user.first_name} {request.user.last_name}'):
                 messages.success(request, 'Photo form successfully signed!')
@@ -156,7 +156,7 @@ def forms(request):
                 request.user.save()
             else:
                 messages.warning(request, 'Your name in the signature form must exactly match your name in your profile.')
-            return redirect('users_forms')
+            return redirect('users-forms')
         elif 'unsubmit-participant-form' in request.POST:
             request.user.signed_participant_form = False
             request.user.save()
