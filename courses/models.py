@@ -38,6 +38,7 @@ class Room(models.Model):
     def __str__(self):
         return self.room_name
 
+""" Note: Students do not signup for Courses; rather, students sign up for Sections, which correspond to a specific Course and Room """
 class Section(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.SET_NULL, blank=True, null=True)

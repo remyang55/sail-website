@@ -25,49 +25,51 @@
             <a class="btn btn-outline-primary" href="{% url 'courses-list' %}">Clear Filters</a>
         </div>
         {% for course in courses %}
-            <article class="media content-section mb-2">
-                <div class="media-body">
-                    <div class="article-metadata">
-                        <h5><u><a id="coursename" href="{% url 'courses-detail' course.id %}">{{ course.course_name }}</a></u></h5>
-                        <span class="ml-1">by {{ course.teacher }}</span>
-                        {% if course.teacher == user.teacher %}
-                            <div>
-                                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'courses-update' course.id %}">Update</a>
-                                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'courses-delete' course.id %}">Delete</a>
-                            </div> 
-                        {% endif %}
-                        {% if user.student %}
-                            <br>
-                            {% for section in course.section_set.all %}
-                                <div class="mr-3 mt-2 mb-1">
-                                    <small class="text-muted"><strong>Time:</strong> {{ section.start_time|date:"H:i" }} - {{ section.start_time|add:course.course_duration|date:"H:i" }}, </small>
-                                    {% if section.course.capacity_limit is not None and section.course.capacity_limit < section.room.max_capacity %}
-                                        <small class="text-muted"><strong>Seats Filled:</strong> {{ section.students.all.count }} of {{ section.course.capacity_limit }}</small>
-                                    {% else %}
-                                        <small class="text-muted"><strong>Seats Filled:</strong> {{ section.students.all.count }} of {{ section.room.max_capacity }}</small>
-                                    {% endif %}
-                                    <form method="POST" style="display:inline">
-                                        {% csrf_token %}
-                                        {% if section in user.student.section_set.all %}
-                                            <button class="btn btn-success btn-sm ml-2" type="submit" name="{{ section.id }}" value="Unregister">Unregister</button>
+            {% if course.approved %}
+                <article class="media content-section mb-2">
+                    <div class="media-body">
+                        <div class="article-metadata">
+                            <h5><u><a id="coursename" href="{% url 'courses-detail' course.id %}">{{ course.course_name }}</a></u></h5>
+                            <span class="ml-1">by {{ course.teacher }}</span>
+                            {% if course.teacher == user.teacher %}
+                                <div>
+                                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'courses-update' course.id %}">Update</a>
+                                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'courses-delete' course.id %}">Delete</a>
+                                </div> 
+                            {% endif %}
+                            {% if user.student %}
+                                <br>
+                                {% for section in course.section_set.all %}
+                                    <div class="mr-3 mt-2 mb-1">
+                                        <small class="text-muted"><strong>Time:</strong> {{ section.start_time|date:"H:i" }} - {{ section.start_time|add:course.course_duration|date:"H:i" }}, </small>
+                                        {% if section.course.capacity_limit is not None and section.course.capacity_limit < section.room.max_capacity %}
+                                            <small class="text-muted"><strong>Seats Filled:</strong> {{ section.students.all.count }} of {{ section.course.capacity_limit }}</small>
                                         {% else %}
-                                            <button class="btn btn-success btn-sm ml-2" type="submit" name="{{ section.id }}" value="Register">Register</button>
+                                            <small class="text-muted"><strong>Seats Filled:</strong> {{ section.students.all.count }} of {{ section.room.max_capacity }}</small>
                                         {% endif %}
-                                    </form>
-                                </div>
-                            {% endfor %}
+                                        <form method="POST" style="display:inline">
+                                            {% csrf_token %}
+                                            {% if section in user.student.section_set.all %}
+                                                <button class="btn btn-success btn-sm ml-2" type="submit" name="{{ section.id }}" value="Unregister">Unregister</button>
+                                            {% else %}
+                                                <button class="btn btn-success btn-sm ml-2" type="submit" name="{{ section.id }}" value="Register">Register</button>
+                                            {% endif %}
+                                        </form>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        <p class="article-content mt-2 mb-2">{{ course.short_description }}</p>
+                        {% if course.prior_knowledge == '' %}
+                            <small class="text-muted"><strong>Prior Knowledge:</strong> None</small>
+                        {% else %}
+                            <small class="text-muted"><strong>Prior Knowledge:</strong> {{ course.prior_knowledge }}</small>
                         {% endif %}
+                        <br>
+                        <small class="text-muted"><strong>Tags:</strong> {{ course.tags.all|join:", " }}</small>
                     </div>
-                    <p class="article-content mt-2 mb-2">{{ course.short_description }}</p>
-                    {% if course.prior_knowledge == '' %}
-                        <small class="text-muted"><strong>Prior Knowledge:</strong> None</small>
-                    {% else %}
-                        <small class="text-muted"><strong>Prior Knowledge:</strong> {{ course.prior_knowledge }}</small>
-                    {% endif %}
-                    <br>
-                    <small class="text-muted"><strong>Tags:</strong> {{ course.tags.all|join:", " }}</small>
-                </div>
-            </article>
+                </article>
+            {% endif %}
         {% endfor %}
         {% if is_paginated %}
             {% if page_obj.has_previous %}
@@ -92,49 +94,51 @@
         <div class="row">
             <div class="col-8">
                 {% for course in courses %}
-                    <article class="media content-section mb-2">
-                        <div class="media-body">
-                            <div class="article-metadata">
-                                <h4 style="display:inline"><u><a id="coursename" href="{% url 'courses-detail' course.id %}">{{ course.course_name }}</a></u></h4>
-                                <span class="ml-1 float-right">by {{ course.teacher }}</span>
-                                {% if course.teacher == user.teacher %}
-                                    <div>
-                                        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'courses-update' course.id %}">Update</a>
-                                        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'courses-delete' course.id %}">Delete</a>
-                                    </div> 
-                                {% endif %}
-                                {% if user.student %}
-                                    <br>
-                                    {% for section in course.section_set.all %}
-                                        <div class="mr-3 mt-2 mb-1">
-                                            <small class="text-muted"><strong>Time:</strong> {{ section.start_time|date:"H:i" }} - {{ section.start_time|add:course.course_duration|date:"H:i" }}, </small>
-                                            {% if section.course.capacity_limit is not None and section.course.capacity_limit < section.room.max_capacity %}
-                                                <small class="text-muted"><strong>Seats Filled:</strong> {{ section.students.all.count }} of {{ section.course.capacity_limit }}</small>
-                                            {% else %}
-                                                <small class="text-muted"><strong>Seats Filled:</strong> {{ section.students.all.count }} of {{ section.room.max_capacity }}</small>
-                                            {% endif %}
-                                            <form method="POST" style="display:inline">
-                                                {% csrf_token %}
-                                                {% if section in user.student.section_set.all %}
-                                                    <button class="btn btn-success btn-sm ml-2" type="submit" name="{{ section.id }}" value="Unregister">Unregister</button>
+                    {% if course.approved %}
+                        <article class="media content-section mb-2">
+                            <div class="media-body">
+                                <div class="article-metadata">
+                                    <h4 style="display:inline"><u><a id="coursename" href="{% url 'courses-detail' course.id %}">{{ course.course_name }}</a></u></h4>
+                                    <span class="ml-1 float-right">by {{ course.teacher }}</span>
+                                    {% if course.teacher == user.teacher %}
+                                        <div>
+                                            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'courses-update' course.id %}">Update</a>
+                                            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'courses-delete' course.id %}">Delete</a>
+                                        </div> 
+                                    {% endif %}
+                                    {% if user.student %}
+                                        <br>
+                                        {% for section in course.section_set.all %}
+                                            <div class="mr-3 mt-2 mb-1">
+                                                <small class="text-muted"><strong>Time:</strong> {{ section.start_time|date:"H:i" }} - {{ section.start_time|add:course.course_duration|date:"H:i" }}, </small>
+                                                {% if section.course.capacity_limit is not None and section.course.capacity_limit < section.room.max_capacity %}
+                                                    <small class="text-muted"><strong>Seats Filled:</strong> {{ section.students.all.count }} of {{ section.course.capacity_limit }}</small>
                                                 {% else %}
-                                                    <button class="btn btn-success btn-sm ml-2" type="submit" name="{{ section.id }}" value="Register">Register</button>
+                                                    <small class="text-muted"><strong>Seats Filled:</strong> {{ section.students.all.count }} of {{ section.room.max_capacity }}</small>
                                                 {% endif %}
-                                            </form>
-                                        </div>
-                                    {% endfor %}
+                                                <form method="POST" style="display:inline">
+                                                    {% csrf_token %}
+                                                    {% if section in user.student.section_set.all %}
+                                                        <button class="btn btn-success btn-sm ml-2" type="submit" name="{{ section.id }}" value="Unregister">Unregister</button>
+                                                    {% else %}
+                                                        <button class="btn btn-success btn-sm ml-2" type="submit" name="{{ section.id }}" value="Register">Register</button>
+                                                    {% endif %}
+                                                </form>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                                <p class="article-content mt-2 mb-2">{{ course.short_description }}</p>
+                                {% if course.prior_knowledge == '' %}
+                                    <small class="text-muted"><strong>Prior Knowledge:</strong> None</small>
+                                {% else %}
+                                    <small class="text-muted"><strong>Prior Knowledge:</strong> {{ course.prior_knowledge }}</small>
                                 {% endif %}
+                                <br>
+                                <small class="text-muted"><strong>Tags:</strong> {{ course.tags.all|join:", " }}</small>
                             </div>
-                            <p class="article-content mt-2 mb-2">{{ course.short_description }}</p>
-                            {% if course.prior_knowledge == '' %}
-                                <small class="text-muted"><strong>Prior Knowledge:</strong> None</small>
-                            {% else %}
-                                <small class="text-muted"><strong>Prior Knowledge:</strong> {{ course.prior_knowledge }}</small>
-                            {% endif %}
-                            <br>
-                            <small class="text-muted"><strong>Tags:</strong> {{ course.tags.all|join:", " }}</small>
-                        </div>
-                    </article>
+                        </article>
+                    {% endif %}
                 {% endfor %}
                 {% if is_paginated %}
                     {% if page_obj.has_previous %}
