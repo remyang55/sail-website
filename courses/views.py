@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import HttpResponseRedirect
 from django.views.generic import (ListView,
                                   DetailView,
                                   CreateView,
@@ -28,13 +29,13 @@ def _register_student_section(self, request, *args, **kwargs):
                 if (s.students.all().count() >= s.room.max_capacity
                     or (s.course.capacity_limit is not None and s.students.all().count() >= s.course.capacity_limit)):
                     messages.warning(request, 'Cannot Register: Section is full')
-                    return redirect('courses-list')
+                    return HttpResponseRedirect(self.request.path_info)  # redirects to same page
 
                 # check if student has course or time conflict
                 for rs in self.request.user.student.section_set.all():
                     if s.course == rs.course:
                         messages.warning(request, 'Cannot Register: Already registered for another section of the same course')
-                        return redirect('courses-list')
+                        return HttpResponseRedirect(self.request.path_info)
                     
                     if ((s.start_time == rs.start_time)
                         or (s.start_time < rs.start_time
@@ -42,12 +43,12 @@ def _register_student_section(self, request, *args, **kwargs):
                         or (s.start_time > rs.start_time
                             and rs.start_time + rs.course.course_duration > s.start_time)):
                         messages.warning(request, f'Cannot Register: Time Conflict with section "{rs}"')
-                        return redirect('courses-list')
+                        return HttpResponseRedirect(self.request.path_info)
 
                 self.request.user.student.section_set.add(section_id)
             elif action == 'Unregister':
                 self.request.user.student.section_set.remove(section_id)
-    return redirect('courses-list')
+    return HttpResponseRedirect(self.request.path_info)
 
 class CourseListView(ListView):
     model = Course

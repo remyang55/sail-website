@@ -5,24 +5,17 @@
     <article class="media content-section">
         <div class="media-body">
             <div class="article-metadata">
-                {% if request.user_agent.is_mobile %}
-                    <h4 class="article-title">{{ course.course_name }}</h4>
-                    <span class="ml-1">by {{ course.teacher }}</span>
-                {% else %}
-                    <h3 class="article-title" style="display:inline">{{ course.course_name }}</h3>
-                    <span class="ml-1 float-right">taught by {{ course.teacher }}</span>
-                {% endif %}
+                <h3 class="article-title">{{ course.course_name }}</h3>
+                <p><i>Taught by {{ course.teacher }}</i></p>
+
                 {% if course.teacher == user.teacher %}
                     <div>
                         <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'courses-update' course.id %}">Update</a>
                         <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'courses-delete' course.id %}">Delete</a>
-                    </div> 
-                {% endif %}
-                {% if user.student %}
-                    <br>
-                    <br>
+                    </div>
+                {% elif user.student %}
                     {% for section in course.section_set.all %}
-                        <div class="mr-3 mt-2 mb-1">
+                        <div class="mr-3 mb-1">
                             <small class="text-muted"><strong>Time:</strong> {{ section.start_time|date:"H:i" }} - {{ section.start_time|add:course.course_duration|date:"H:i" }}, </small>
                             {% if section.course.capacity_limit is not None and section.course.capacity_limit < section.room.max_capacity %}
                                 <small class="text-muted"><strong>Seats Filled:</strong> {{ section.students.all.count }} of {{ section.course.capacity_limit }}</small>
@@ -41,7 +34,7 @@
                     {% endfor %}
                 {% endif %}
             </div>
-            <p class="article-content mt-2 mb-2">{{ course.description }}</p>
+            <p class="article-content my-2">{{ course.description }}</p>
             {% if course.prior_knowledge == '' %}
                 <small class="text-muted"><strong>Prior Knowledge:</strong> None</small>
             {% else %}
