@@ -22,7 +22,7 @@
                             {% else %}
                                 <small class="text-muted"><strong>Seats Filled:</strong> {{ section.students.all.count }} of {{ section.room.max_capacity }}</small>
                             {% endif %}
-                            <form method="POST" style="display:inline">
+                            <form method="POST" class="d-inline">
                                 {% csrf_token %}
                                 {% if section in user.student.section_set.all %}
                                     <button class="btn btn-success btn-sm ml-2" type="submit" name="{{ section.id }}" value="Unregister">Unregister</button>

@@ -59,11 +59,6 @@ main {
     color: #658ae9;
 }
 
-#coursename:hover {
-    color: #658ae9;
-    text-decoration: none;
-}
-
 .article-content {
     white-space: pre-line;
 }
@@ -104,4 +99,8 @@ main {
 
 .about p {
     margin-bottom: 1.5%;
+}
+
+.course-name:hover {
+    color: #658ae9 !important;
 }
