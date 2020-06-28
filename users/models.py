@@ -62,7 +62,7 @@ class SailUser(AbstractUser):
     objects = SailUserManager()
 
     def __str__(self):
-        return f'{self.user.first_name} {self.user.last_name}'
+        return f'{self.first_name} {self.last_name}'
 
 class Teacher(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)

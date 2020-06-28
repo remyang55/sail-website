@@ -10,7 +10,7 @@
                     <span class="ml-1">by {{ course.teacher }}</span>
                 {% else %}
                     <h3 class="article-title" style="display:inline">{{ course.course_name }}</h3>
-                    <span class="ml-1 float-right">by {{ course.teacher }}</span>
+                    <span class="ml-1 float-right">taught by {{ course.teacher }}</span>
                 {% endif %}
                 {% if course.teacher == user.teacher %}
                     <div>
@@ -19,6 +19,7 @@
                     </div> 
                 {% endif %}
                 {% if user.student %}
+                    <br>
                     <br>
                     {% for section in course.section_set.all %}
                         <div class="mr-3 mt-2 mb-1">
@@ -50,7 +51,7 @@
             <small class="text-muted"><strong>Tags:</strong> {{ course.tags.all|join:", " }}</small>
         </div>
     </article>
-    <div class="border-top pt-3">
+    <div class="border-top pt-3 mb-5">
         <small class="text-muted">
             <a href="{% url 'courses-list' %}">Back to Courses</a>
         </small>

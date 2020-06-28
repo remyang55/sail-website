@@ -14,6 +14,7 @@ class Course(models.Model):
     course_length = models.PositiveSmallIntegerField(default=60, help_text="Length of your course in minutes, either 60 or 120.")
     capacity_limit = models.PositiveSmallIntegerField(blank=True, null=True, help_text="Leave blank if none.")
     approved = models.BooleanField(default=False)
+    curated = models.BooleanField(default=False)
     last_modified = models.DateTimeField(auto_now=True)
     time_created = models.DateTimeField(auto_now_add=True)
     tags = TaggableManager(blank=True)
@@ -23,7 +24,7 @@ class Course(models.Model):
         return datetime.timedelta(minutes=self.course_length)
 
     class Meta:
-        ordering = ["course_name"]
+        ordering = ['-curated', 'course_name']
 
     def __str__(self):
         return self.course_name
