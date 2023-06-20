@@ -9,7 +9,7 @@ django-crispy-forms==1.9.1
 django-import-export==2.2.0
 django-qrcode==0.3
 django-taggit==1.3.0
-django-tinymce==3.0.2
+django-tinymce==3.4.0
 django-user-agents==0.4.0
 et-xmlfile==1.0.1
 isort==4.3.21
