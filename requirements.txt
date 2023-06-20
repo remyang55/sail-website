@@ -4,7 +4,7 @@ betterpath==0.2.2
 click==7.1.2
 defusedxml==0.6.0
 diff-match-patch==20181111
-Django==3.0.7
+Django==3.1.13
 django-crispy-forms==1.9.1
 django-import-export==2.2.0
 django-qrcode==0.3
